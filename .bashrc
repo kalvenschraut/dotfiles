@@ -88,9 +88,6 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-# ssh aliases
-alias ssh-egram='ssh kalvens@2620:9d:4000:72:136c:fa8:54b:9be1'
-alias ssh-ws='ssh kalvens@2620:9d:4000:1:eb18:2e99:4914:4150'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
