@@ -36,6 +36,11 @@ if has("autocmd")
 	let g:airline#extensions#syntastic#enabled = 1
 	let g:airline_theme = 'solarized'
 
+	let g:syntastic_always_populate_loc_list = 1
+	let g:syntastic_auto_loc_list = 1
+	let g:syntastic_check_on_open = 1
+	let g:syntastic_check_on_wq = 0
+
 	" Toggle nerd tree
 	map <C-n> :NERDTreeToggle<CR>
 	" Open automaticlly if no files were specified
@@ -82,6 +87,10 @@ if has("cmdline_info")
 	" Show whether in insert or replace mode
 	set showmode
 endif
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatusLineFlag()}
+set statusline+=%*
 
 if has("statusline")
 	" Always show status line
