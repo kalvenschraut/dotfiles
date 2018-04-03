@@ -1,0 +1,4 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =2
+let g:netrw_dirhist_1='/home/schra447/kalvens_vim'
+let g:netrw_dirhist_2='/home/schra447/classes/2041/repo-schra447/Lab_10'
