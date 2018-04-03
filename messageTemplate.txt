@@ -1,0 +1,26 @@
+# Git commit message template
+# Layout:
+# <Title> (aka <type>(<scope>): <subject>)
+# <body>
+# <footer>
+#
+#
+# Layout Explanation:
+# <scope>   : whatever module(s) are affected
+# <type>    : Must be one of the types below:
+#
+#             feat     (new feature)
+#             fix      (bug fix)
+#             docs     (changes to documentation)
+#             style    (formatting, missing semicolons, etc; no code change)
+#             refactor (refactoring production code; i.e. no functionality change)
+#             test     (adding missing tests, refactoring tests;
+#                       no production code change)
+#             chore    (updating grunt tasks etc; no production code change)
+#
+# <subject>      : Think 'If applied this commit will...'
+# <body>         : Description of what you did, explaining WHY this change was
+#                  made.
+# <footer>       : Provide links to any relevant tickets, articles, or other resources
+#
+# Add your commit message below here, following the guidelines above. 
