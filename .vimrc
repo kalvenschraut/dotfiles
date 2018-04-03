@@ -9,8 +9,7 @@ set nocompatible
 silent! runtime bundle/vim-pathogen/autoload/pathogen.vim
 " Call pathogen plugin management
 silent! execute pathogen#infect()
-autocmd BufWinLeave *.* mkview
-autocmd BufWinEnter *.* silent loadview 
+
 if has("autocmd")
 	" Load files for specific filetypes
 	filetype on
@@ -20,58 +19,60 @@ if has("autocmd")
 	" Languages with specific tabs/space requirements
 	autocmd FileType make setlocal ts=4 sts=4 sw=4 noexpandtab
 	" Filetypes
-	au BufRead,BufNewFile *.ajax set ft=php
 	au BufRead,BufNewFile *.phar set ft=php
-	au BufRead,BufNewFile *.rss set ft=php
-	au BufRead,BufNewFile *.xml set ft=php
-	au BufRead,BufNewFile *.less set ft=less
-	au Bufread,BufNewFile *.feature set filetype=gherkin
-	au BufRead,BufNewFile *.json set ft=json syntax=javascript
-
-	" Enable the tab line / buffer list
-	let g:airline#extensions#tabline#enabled = 1
-	" Only show the file name
-	let g:airline#extensions#tabline#fnamemod = ':t'
-	" Enable syntastic integration
-	let g:airline#extensions#syntastic#enabled = 1
-	let g:airline_theme = 'solarized'
-
-	" Toggle nerd tree
-	map <C-n> :NERDTreeToggle<CR>
-	" Open automaticlly if no files were specified
-	autocmd StdinReadPre * let s:std_in=1
-	autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-	" Close if only window left open
-	autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
-	" Draw PHP documentation blocks
-	" Use in visual mode to draw for an entire selection
-	au BufRead,BufNewFile *.php inoremap <buffer> <C-P> :call PhpDocSingle()<C-M>
-	au BufRead,BufNewFile *.php nnoremap <buffer> <C-P> :call PhpDocSingle()<C-M>
-	au BufRead,BufNewFile *.php vnoremap <buffer> <C-P> :call PhpDocRange()<C-M>
-
-	augroup END
 endif
 
 if has("syntax")
-	" Enable syntax highlighting
-	syntax on
-	" Set 256 color terminal support
-	set t_Co=256
-	" Set dark background
-	set background=dark
-	" Very important this is set before colorscheme
-	let g:solarized_termcolors=256
-	" Set colorscheme
-	colorscheme pablo
-	"colorscheme badwolf
 	if &term =~ '256color'
 		" disable Background Color Erase (BCE) so that color schemes
 		" render properly when inside 256-color tmux and GNU screen.
 		" see also http://snk.tuxfamily.org/log/vim-256color-bce.html
 		set t_ut=
 	endif
+	" Set 256 color terminal support
+	set t_Co=256
+	" Enable syntax highlighting
+	syntax on
+	" Set dark background
+	set background=dark
 
+	" Available colorschemes
+	" - onedark
+	" - maui
+	" - badwolf
+	" - space-vim-dark
+	" - solarized (see below)
+	" - molokai (see below)
+	colorscheme badwolf
+
+	" Solarized color scheme
+	"let g:solarized_termcolors=256
+	"colorscheme solarized
+
+	" Molokai color scheme
+	"let g:molokai_original = 1
+	"let g:rehash256 = 1
+	"colorscheme molokai
+
+	" Syntastic
+	let g:syntastic_php_checkers = []
+	let g:syntastic_javascript_checkers=['eslint']
+	let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'
+
+	" Available syntastic themes
+	" - onedark
+	" - solarized
+	" - afterglow
+	" - violet (matches space-vim-dark)
+	let g:airline_theme = 'onedark'
+	" Enable the tab line / buffer list
+	let g:airline#extensions#tabline#enabled = 1
+	" Only show the file name
+	let g:airline#extensions#tabline#fnamemod = ':t'
+	" Enable syntastic integration
+	let g:airline#extensions#syntastic#enabled = 1
+	" Enable mustache abbreviations
+	let g:mustache_abbreviations = 1
 endif
 
 if has("cmdline_info")
@@ -128,8 +129,8 @@ set scrolloff=5
 set foldmethod=marker
 " Don't set cursor at start of line when moving
 set nostartofline
-" Turn off lazy redraw
-set nolazyredraw
+" Turn on lazy redraw
+set lazyredraw
 " Highlight current line
 set cursorline
 
@@ -142,9 +143,9 @@ set list listchars=tab:>-,trail:-,nbsp:_
 set autoindent
 set smartindent
 set smarttab
-set shiftwidth=2
-set softtabstop=2
-set tabstop=2
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
 
 " Open vertical split below
 set splitbelow
@@ -165,6 +166,10 @@ au GUIEnter * set vb t_vb=
 
 " Change mapleader to ,
 let mapleader=","
+
+" Make selection again after a multi-line indent
+vnoremap < <gv
+vnoremap > >gv
 
 " Toggle folds with space bar
 nnoremap <Space> za

@@ -1,18 +1,35 @@
-# /etc/skel/.bashrc
-#
-# This file is sourced by all *interactive* bash shells on startup,
-# including some apparently interactive shells such as scp and rcp
-# that can't tolerate any output.  So make sure this doesn't display
-# anything or bad things will happen !
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# vim: ft=sh ts=4
+
+[ -z "$PS1" ] && return
+
+case ${TERM} in
+	xterm*|rxvt*|gnome*|konsole*)
+		export TERM=xterm-256color
+		export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\007"'
+		;;
+	screen*)
+		export TERM=screen-256color
+		export PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\033\\"'
+		;;
+esac
+
+source_dir() {
+	local dir="$1"
+	if [[ -d $dir ]]; then
+		local conf_file
+		for conf_file in "$dir"/*; do
+			if [[ -f $conf_file && $(basename $conf_file) != 'README' ]]; then
+				source "$conf_file"
+			fi
+		done
+	fi
+}
 
 
-# Test for an interactive shell.  There is no need to set anything
-# past this point for scp and rcp, and it's important to refrain from
-# outputting anything in those cases.
-if [[ $- != *i* ]] ; then
-	# Shell is non-interactive.  Be done now!
-	return
-fi
+source_dir ~/.bash.d/local/before
+source_dir ~/.bash.d
+source_dir ~/.bash.d/local/after
 
 if [ -f ~/.ssh/agent ]; then
         alias restart-ssh-agent='ssh-agent > ~/.ssh/agent; source ~/.ssh/agent; ssh-add'
@@ -22,6 +39,3 @@ if [ -e ~/.ssh/agent ]; then
         test -z "$(pidof ssh-agent)" && echo "echo \"No agent is running\"" > ~/.ssh/agent
         source ~/.ssh/agent
 fi;
-
-
-# Put your fun stuff here.
