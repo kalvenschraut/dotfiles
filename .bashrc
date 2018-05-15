@@ -88,6 +88,8 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+alias ssh-egram='ssh -A 192.168.50.50'
+
 #export DISPLAY=localhost:0.0
 
 # start ssh agent if not running

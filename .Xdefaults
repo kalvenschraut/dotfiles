@@ -22,7 +22,7 @@ xterm*preeditType: Root
 !xterm*faceName: Terminus
 !xterm*faceName: Droid Sans Mono
 xterm*faceName: Dejavu Sans Mono
-xterm*faceSize: 8
+xterm*faceSize: 9
 
 ! Trim trailing spaces
 xterm*trimSelection: true
