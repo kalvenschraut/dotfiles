@@ -58,6 +58,9 @@ if has("syntax")
 	let g:syntastic_php_checkers = []
 	let g:syntastic_javascript_checkers=['eslint']
 	let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'
+	let g:syntastic_cpp_check_header = 1
+	let g:syntastic_cpp_config_file = '.syntastic_cpp_config'
+	" let g:syntastic_debug = 3
 
 	" Available syntastic themes
 	" - onedark
