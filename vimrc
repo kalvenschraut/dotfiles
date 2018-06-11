@@ -20,7 +20,11 @@ if has("autocmd")
 	autocmd FileType make setlocal ts=4 sts=4 sw=4 noexpandtab
 	" Filetypes
 	au BufRead,BufNewFile *.phar set ft=php
+
+	" fix vim init hightlighting issues
+	autocmd BufEnter *.vue :syntax sync fromstart
 endif
+
 
 if has("syntax")
 	if &term =~ '256color'
@@ -55,19 +59,16 @@ if has("syntax")
 	"colorscheme molokai
 
 	" Syntastic
+	let g:syntastic_check_on_open = 1
+	let g:syntastic_check_on_wq = 1
+	let g:syntastic_always_populate_loc_list = 1
+	let g:syntastic_auto_loc_list = 1
 	let g:syntastic_php_checkers = []
 	let g:syntastic_javascript_checkers=['eslint']
 	let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'
 	let g:syntastic_cpp_check_header = 1
 	let g:syntastic_cpp_config_file = '.syntastic_cpp_config'
 
-	set statusline+=%#warningmsg#
-	set statusline+=%{SyntasticStatuslineFlag()}
-	set statusline+=%*
-	let g:syntastic_always_populate_loc_list = 1
-	let g:syntastic_auto_loc_list = 1
-	let g:syntastic_check_on_open = 1
-	let g:syntastic_check_on_wq = 1
 
 	" let g:syntastic_debug = 3
 
