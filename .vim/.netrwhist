@@ -1,6 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =4
-let g:netrw_dirhist_1='/home/kalvens/invoice-2.x/node_modules/pdfjs-dist/web'
-let g:netrw_dirhist_2='/home/kalvens/invoice-2.x/tests/acceptance'
-let g:netrw_dirhist_3='/home/kalvens/roads-2.x/tests/acceptance'
-let g:netrw_dirhist_4='/home/kalvens/dotfiles/.vim/bundle'
