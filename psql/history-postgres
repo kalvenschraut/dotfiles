@@ -1,3 +1,0 @@
-\c onegov2_rtkalven_rtvision_com 
-select * from custcolumns;
-\q
