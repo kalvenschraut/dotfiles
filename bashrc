@@ -42,7 +42,7 @@ fi;
 
 # ssh aliases
 alias ssh-eg='ssh -A kalvens@2620:9d:4000:72:136c:fa8:54b:9be1'
-alias ssh-ws='ssh kalvens@2620:9d:4000:1:eb18:2e99:4914:4150'
+alias ssh-ws='ssh kalvens@192.168.1.72'
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
@@ -111,3 +111,6 @@ fi
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+alias ipv6-randip='dd if=/dev/urandom bs=8 count=1 2>/dev/null | od -x -A n | sed -e "s/^ //" -e "s/ /:/g" -e "s/:0*/:/g" -e "s/^0*//"'
+
