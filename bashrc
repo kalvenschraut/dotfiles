@@ -90,12 +90,6 @@ fi
 
 export DISPLAY=localhost:0.0
 
-# start ssh agent if not running
-if [ -z "$SSH_AUTH_SOCK" ] ; then
-		eval `ssh-agent -s`
-		ssh-add
-fi
-
 #current alternative screen directory if the normal one doesn't exist
 ALTSCREENDIR=$HOME/.screen
 if [ ! -d "/var/run/screen" ]; then
