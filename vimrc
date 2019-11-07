@@ -21,8 +21,13 @@ if has("autocmd")
 	" Filetypes
 	au BufRead,BufNewFile *.phar set ft=php
 
+	au BufRead,BufNewFile *.json set ts=2 sts=2 sw=2  noexpandtab
+
+	au BufRead,BufNewFile *.feature set ts=2 sts=2 sw=2  noexpandtab
+
 	" fix vim init hightlighting issues
 	autocmd BufEnter *.vue :syntax sync fromstart
+	 autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css.scss
 endif
 
 
