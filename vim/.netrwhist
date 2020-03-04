@@ -1,3 +1,8 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =1
+let g:netrw_dirhist_cnt =6
 let g:netrw_dirhist_1='/home/kalvens/rtvision-app/frontend/nginx'
+let g:netrw_dirhist_2='/home/kalvens/rtvision-app/common/src'
+let g:netrw_dirhist_3='/home/kalvens/rtvision-app/frontend/node_modules/package-hash'
+let g:netrw_dirhist_4='/home/kalvens/rtvision-app/frontend/nginx'
+let g:netrw_dirhist_5='/home/kalvens/rtvision-app/store/src/rw-legacy'
+let g:netrw_dirhist_6='/home/kalvens/riv-node-proj/Hertz Hackathon entry challenge'
