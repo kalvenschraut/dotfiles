@@ -172,6 +172,11 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 " end coc vim
 
+" templates used on new files
+augroup templates
+	autocmd BufNewFile *.vue 0r ~/.vim/templates/sfc.vue
+augroup END
+
 if has("syntax")
 	if &term =~ '256color'
 		" disable Background Color Erase (BCE) so that color schemes
