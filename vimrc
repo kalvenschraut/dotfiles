@@ -27,7 +27,7 @@ if has("autocmd")
 	autocmd FileType json syntax match Comment +\/\/.\+$+
 endif
 
-let g:vue_pre_processors = ['scss']
+let g:vue_pre_processors = ['scss', 'typescript']
 
 " COC vim https://github.com/neoclide/coc.nvim
 " TextEdit might fail if hidden is not set.
@@ -50,6 +50,18 @@ set shortmess+=c
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
 set signcolumn=yes
+
+" @yaegassy/coc-volar is for vue 3
+let g:coc_global_extensions = [
+	\'@yaegassy/coc-volar',
+	\'coc-tsserver',
+	\'coc-eslint',
+	\'coc-stylelint',
+	\'coc-json',
+	\'coc-highlight',
+	\'coc-html',
+	\'coc-phpls'
+\]
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
@@ -184,8 +196,14 @@ if has("syntax")
 		" see also http://snk.tuxfamily.org/log/vim-256color-bce.html
 		set t_ut=
 	endif
+
 	" Set 256 color terminal support
 	set t_Co=256
+
+	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+	set termguicolors
+
 	" Enable syntax highlighting
 	syntax on
 	" Set dark background
@@ -198,6 +216,8 @@ if has("syntax")
 	" - space-vim-dark
 	" - solarized (see below)
 	" - molokai (see below)
+	" - gruvbox
+	" let g:gruvbox_contrast_dark = 'hard'
 	colorscheme badwolf
 
 	" Solarized color scheme
@@ -209,34 +229,12 @@ if has("syntax")
 	"let g:rehash256 = 1
 	"colorscheme molokai
 
-	" Syntastic
-	let g:syntastic_check_on_open = 1
-	let g:syntastic_check_on_wq = 1
-	let g:syntastic_always_populate_loc_list = 1
-	let g:syntastic_auto_loc_list = 1
-	let g:syntastic_php_checkers = []
-	let g:syntastic_javascript_checkers=['eslint']
-	let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'
-	let g:syntastic_cpp_check_header = 1
-	let g:syntastic_cpp_config_file = '.syntastic_cpp_config'
-
-
 	" let g:syntastic_debug = 3
-
-	" Available syntastic themes
-	" - onedark
-	" - solarized
-	" - afterglow
-	" - violet (matches space-vim-dark)
 	let g:airline_theme = 'onedark'
 	" Enable the tab line / buffer list
 	let g:airline#extensions#tabline#enabled = 1
 	" Only show the file name
 	let g:airline#extensions#tabline#fnamemod = ':t'
-	" Enable syntastic integration
-	let g:airline#extensions#syntastic#enabled = 1
-	" Enable mustache abbreviations
-	let g:mustache_abbreviations = 1
 endif
 
 if has("cmdline_info")
