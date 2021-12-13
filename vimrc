@@ -55,7 +55,7 @@ set signcolumn=yes
 let g:coc_global_extensions = [
 	\'@yaegassy/coc-volar',
 	\'coc-tsserver',
-	\'coc-eslint',
+	\'coc-eslint8',
 	\'coc-stylelint',
 	\'coc-json',
 	\'coc-highlight',
@@ -217,8 +217,8 @@ if has("syntax")
 	" - solarized (see below)
 	" - molokai (see below)
 	" - gruvbox
-	" let g:gruvbox_contrast_dark = 'hard'
-	colorscheme badwolf
+	let g:gruvbox_contrast_dark = 'hard'
+	colorscheme gruvbox
 
 	" Solarized color scheme
 	"let g:solarized_termcolors=256
