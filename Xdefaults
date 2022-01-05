@@ -10,6 +10,9 @@ xterm*scrollBar: False
 xterm*loginshell: False
 xterm*cursorBlink: False
 
+! Backspace to ^?
+xterm.*backarrowKey: false
+
 ! Fonts and Encoding
 xterm*utf8: True
 xterm*locale: True
