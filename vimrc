@@ -29,6 +29,9 @@ endif
 
 let g:vue_pre_processors = ['scss', 'typescript']
 
+" Change mapleader to ,
+let mapleader=","
+
 " COC vim https://github.com/neoclide/coc.nvim
 " TextEdit might fail if hidden is not set.
 set hidden
@@ -325,9 +328,6 @@ set undoreload=10000          " number of lines to save for undo
 " Disable beep and flash
 set noeb vb t_vb=
 au GUIEnter * set vb t_vb=
-
-" Change mapleader to ,
-let mapleader=","
 
 " Make selection again after a multi-line indent
 vnoremap < <gv
