@@ -63,7 +63,8 @@ let g:coc_global_extensions = [
 	\'coc-json',
 	\'coc-highlight',
 	\'coc-html',
-	\'coc-phpls'
+	\'coc-phpls',
+	\'coc-spell-checker'
 \]
 
 " Use tab for trigger completion with characters ahead and navigate.
