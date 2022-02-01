@@ -53,8 +53,6 @@ set signcolumn=yes
 let g:pathogen_blacklist = ['coc.nvim']
 if empty(system('which node')) == 0
 	let g:pathogen_blacklist = []
-	" Point to location of pathogen submodule (since it's not in .vim/autoload)
-	silent! runtime bundle/
 	" @yaegassy/coc-volar is for vue 3
 	let g:coc_global_extensions = [
 		\'@yaegassy/coc-volar',
@@ -64,6 +62,7 @@ if empty(system('which node')) == 0
 		\'coc-json',
 		\'coc-highlight',
 		\'coc-html',
+		\'coc-pyright',
 		\'coc-phpls',
 		\'coc-spell-checker'
 	\]
@@ -242,7 +241,6 @@ if has("syntax")
 	"let g:rehash256 = 1
 	"colorscheme molokai
 
-	" let g:syntastic_debug = 3
 	let g:airline_theme = 'onedark'
 	" Enable the tab line / buffer list
 	let g:airline#extensions#tabline#enabled = 1
