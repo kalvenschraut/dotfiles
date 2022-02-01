@@ -1,9 +1,6 @@
 [submodule "bundles/vim-vue"]
 	path = bundles/vim-vue
 	url = https://github.com/posva/vim-vue
-[submodule "bundles/syntastic"]
-	path = bundles/syntastic
-	url = https://github.com/vim-syntastic/syntastic
 [submodule "vim/bundle/vim-javascript"]
 	path = vim/bundle/vim-javascript
 	url = https://github.com/pangloss/vim-javascript
