@@ -4,7 +4,7 @@ $if mode=vi
 	# insert mode
 	set keymap vi-insert
 	"\C-h": backward-char
+	"\C-j": next-history
+	"\C-k": previous-history
 	"\C-l": forward-char
-	"\C-h": previous-history
-	"\C-l": next-history
 $endif

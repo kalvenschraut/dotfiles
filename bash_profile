@@ -21,4 +21,6 @@ else
     start_agent;
 fi
 
-[[ -f ~/.bashrc ]] && . ~/.bashrc
+if [[ -f ~/.bashrc ]] ; then
+	. ~/.bashrc
+fi
