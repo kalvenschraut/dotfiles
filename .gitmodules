@@ -34,9 +34,6 @@
 [submodule "vim/bundle/space-vim-dark"]
 	path = vim/bundle/space-vim-dark
 	url = https://github.com/liuchengxu/space-vim-dark
-[submodule "vim/bundle/onedark.vim"]
-	path = vim/bundle/onedark.vim
-	url = https://github.com/joshdick/onedark.vim
 [submodule "vim/bundle/vim-afterglow"]
 	path = vim/bundle/vim-afterglow
 	url = https://github.com/danilo-augusto/vim-afterglow
@@ -61,3 +58,6 @@
 [submodule "vim/bundle/gruvbox"]
 	path = vim/bundle/gruvbox
 	url = https://github.com/morhetz/gruvbox
+[submodule "vim/bundle/vim-airline-themes"]
+	path = vim/bundle/vim-airline-themes
+	url = https://github.com/vim-airline/vim-airline-themes

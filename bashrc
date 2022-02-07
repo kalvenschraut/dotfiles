@@ -36,15 +36,6 @@ source_dir ~/.bash.d/local/before
 source_dir ~/.bash.d
 source_dir ~/.bash.d/local/after
 
-if [ -f ~/.ssh/agent ]; then
-        alias restart-ssh-agent='ssh-agent > ~/.ssh/agent; source ~/.ssh/agent; ssh-add'
-fi
-
-if [ -e ~/.ssh/agent ]; then
-        test -z "$(pidof ssh-agent)" && echo "echo \"No agent is running\"" > ~/.ssh/agent
-        source ~/.ssh/agent
-fi;
-
 # ssh aliases
 alias ssh-eg='ssh -A kalvens@2620:9d:4000:72:136c:fa8:54b:9be1'
 alias ssh-ws='ssh kalvens@192.168.1.72'
@@ -95,14 +86,6 @@ fi
 
 alias ssh-egram='ssh -A 192.168.50.50'
 
-#export DISPLAY=localhost:0.0
-
-# start ssh agent if not running
-if [ -z "$SSH_AUTH_SOCK" ] ; then
-		eval `ssh-agent -s`
-		ssh-add
-fi
-
 #current alternative screen directory if the normal one doesn't exist
 ALTSCREENDIR=$HOME/.screen
 if [ ! -d "/var/run/screen" ]; then
@@ -118,3 +101,5 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 alias ipv6-randip='dd if=/dev/urandom bs=8 count=1 2>/dev/null | od -x -A n | sed -e "s/^ //" -e "s/ /:/g" -e "s/:0*/:/g" -e "s/^0*//"'
+
+bind -f ~/.inputrc

@@ -241,7 +241,8 @@ if has("syntax")
 	"let g:rehash256 = 1
 	"colorscheme molokai
 
-	let g:airline_theme = 'onedark'
+	" let g:syntastic_debug = 3
+	let g:airline_theme = 'gruvbox'
 	" Enable the tab line / buffer list
 	let g:airline#extensions#tabline#enabled = 1
 	" Only show the file name

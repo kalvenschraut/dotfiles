@@ -1,0 +1,10 @@
+set editing-mode vi
+
+$if mode=vi
+	# insert mode
+	set keymap vi-insert
+	"\C-h": backward-char
+	"\C-l": forward-char
+	"\C-h": previous-history
+	"\C-l": next-history
+$endif
