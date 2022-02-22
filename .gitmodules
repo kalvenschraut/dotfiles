@@ -1,6 +1,3 @@
-[submodule "bundles/vim-vue"]
-	path = bundles/vim-vue
-	url = https://github.com/posva/vim-vue
 [submodule "vim/bundle/vim-javascript"]
 	path = vim/bundle/vim-javascript
 	url = https://github.com/pangloss/vim-javascript
@@ -43,9 +40,6 @@
 [submodule "vim/bundle/vim-maui"]
 	path = vim/bundle/vim-maui
 	url = https://github.com/zsoltf/vim-maui
-[submodule "vim/bundle/vim-vue"]
-	path = vim/bundle/vim-vue
-	url = https://github.com/posva/vim-vue
 [submodule "vim/bundle/syntastic"]
 	path = vim/bundle/syntastic
 	url = https://github.com/vim-syntastic/syntastic
@@ -61,3 +55,6 @@
 [submodule "vim/bundle/vim-airline-themes"]
 	path = vim/bundle/vim-airline-themes
 	url = https://github.com/vim-airline/vim-airline-themes
+[submodule "vim/bundle/vim-vue-plugin"]
+	path = vim/bundle/vim-vue-plugin
+	url = https://github.com/leafOfTree/vim-vue-plugin
