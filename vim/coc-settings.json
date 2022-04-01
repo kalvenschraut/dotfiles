@@ -5,5 +5,11 @@
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   "volar.completion.tagNameCase": "kebab",
-  "coc.preferences.jumpCommand": "split"
+  "coc.preferences.jumpCommand": "split",
+  "npm.binPath": "/usr/bin/pnpm",
+  "ansible.builtin.isWithYamllint": true,
+  "cSpell.userWords": [
+    "Csrfp",
+    "pnpm"
+  ]
 }

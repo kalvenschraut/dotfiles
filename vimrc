@@ -50,12 +50,12 @@ set shortmess+=c
 set signcolumn=yes
 
 " {{{ Coc Vim Autocomplete setup
-let g:pathogen_blacklist = ['coc.nvim']
 if empty(system('which node')) == 0
-	let g:pathogen_blacklist = []
+	packadd! coc.nvim
 	" @yaegassy/coc-volar is for vue 3
 	let g:coc_global_extensions = [
 		\'@yaegassy/coc-volar',
+		\'@yaegassy/coc-ansible',
 		\'coc-tsserver',
 		\'coc-eslint8',
 		\'coc-stylelint',
@@ -189,12 +189,6 @@ if empty(system('which node')) == 0
 	" end coc vim
 endif
 " }}}
-
-" Point to location of pathogen submodule (since it's not in .vim/autoload)
-silent! runtime bundle/vim-pathogen/autoload/pathogen.vim
-" Call pathogen plugin management
-silent! execute pathogen#infect()
-
 
 " templates used on new files
 augroup templates
