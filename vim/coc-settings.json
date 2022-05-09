@@ -4,12 +4,30 @@
   "typescript.showDeprecated": true,
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
+  "typescript.preferences.importModuleSpecifier": "non-relative",
   "volar.completion.tagNameCase": "kebab",
   "coc.preferences.jumpCommand": "split",
   "npm.binPath": "/usr/bin/pnpm",
   "ansible.builtin.isWithYamllint": true,
   "cSpell.userWords": [
     "Csrfp",
-    "pnpm"
+    "Kalven",
+    "Schraut",
+    "Trettel",
+    "accum",
+    "amcharts",
+    "bignumber",
+    "browserslist",
+    "codeceptjs",
+    "composables",
+    "luxon",
+    "nopad",
+    "pnpm",
+    "rtvision",
+    "stylelint",
+    "treeify",
+    "tsup",
+    "vite",
+    "vitest"
   ]
 }

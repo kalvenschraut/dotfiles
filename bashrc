@@ -31,6 +31,12 @@ source_dir() {
 	fi
 }
 
+gfbs () {
+	test -z "$1" && { echo "Please provide the bugfix name";  return; }
+	git fetch -p
+	git flow bugfix start $1 $(git branch -a | grep -E 'remotes.*release' | sed 's%remotes/origin/%%' | sort | tail -n1 | xargs)
+}
+
 
 source_dir ~/.bash.d/local/before
 source_dir ~/.bash.d
@@ -103,3 +109,6 @@ export NVM_DIR="$HOME/.nvm"
 alias ipv6-randip='dd if=/dev/urandom bs=8 count=1 2>/dev/null | od -x -A n | sed -e "s/^ //" -e "s/ /:/g" -e "s/:0*/:/g" -e "s/^0*//"'
 
 bind -f ~/.inputrc
+
+export PNPM_HOME="/home/kalvens/.local/share/pnpm"
+export PATH="$PNPM_HOME:$PATH"

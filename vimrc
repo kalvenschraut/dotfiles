@@ -63,7 +63,9 @@ if empty(system('which node')) == 0
 		\'coc-highlight',
 		\'coc-html',
 		\'coc-pyright',
+		\'coc-prettier',
 		\'coc-phpls',
+		\'coc-yaml',
 		\'coc-spell-checker'
 	\]
 
@@ -121,8 +123,8 @@ if empty(system('which node')) == 0
 	nmap <leader>rn <Plug>(coc-rename)
 
 	" Formatting selected code.
-	xmap <leader>f  <Plug>(coc-format-selected)
-	nmap <leader>f  <Plug>(coc-format-selected)
+	nmap <leader>f  :call CocAction('runCommand', 'prettier.formatFile')<CR>
+	xmap <leader>f  :call CocAction('runCommand', 'prettier.formatFile')<CR>
 
 	augroup mygroup
 	  autocmd!
