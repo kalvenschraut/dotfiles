@@ -1,0 +1,11 @@
+useTabs: true
+tabWidth: 4
+trailingComma: none
+singleQuote: true
+bracketSameLine: true
+singleAttributePerLine: true
+overrides:
+  - files: '*\.(json|yml|yaml)'
+    options:
+      useTabs: false
+      tabWidth: 2
