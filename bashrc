@@ -48,46 +48,61 @@ alias ssh-ws='ssh kalvens@192.168.1.72'
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
+	xterm-color|*-256color) color_prompt=yes;;
 esac
 
 if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
-    else
-	color_prompt=
-    fi
+	if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+		# We have color support; assume it's compliant with Ecma-48
+		# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+		# a case would tend to support setf rather than setaf.)
+		color_prompt=yes
+	else
+		color_prompt=
+	fi
 fi
 
+function color_prompt {
+	# need \[ and \] wrapping colors so correct width is figured out by terminal
+	# \033[ is how to specify bash color
+	# \033[32m is a color i.e. green see https://dev.to/ifenna__/adding-colors-to-bash-scripts-48g4
+	# \033[01;32m adds bold font weight see above link for codes
+	# also colors and fonts persist until changed again.. so ened the reset color back to normal at the end
+	local USER_HOST="\[\033[01;32m\]\u@\h"
+	local CURRENT_LOCATION="\[\033[34m\]\w"
+	local GIT_BRANCH='$(git branch 2> /dev/null | grep -e ^* | sed "s/\*/ on/")'
+	local GIT_PROMPT="\[\033[00;96m\]$GIT_BRANCH"
+	local PROMPT_TAIL="\[\033[01;00m\] $"
+	local RESET_COLOR="\[\033[00;00m\]"
+	echo "$USER_HOST $CURRENT_LOCATION$GIT_PROMPT$PROMPT_TAIL$RESET_COLOR "
+}
+
 if [ "$color_prompt" = yes ]; then
-	PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\e[01;36m$(parse_git_branch)\e]\[\033[00m\]\$ '
+	PS1=$(color_prompt)
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+	PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
+	xterm*|rxvt*)
+		PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+		;;
+	*)
+		;;
 esac
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
+	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+	alias ls='ls --color=auto'
+	#alias dir='dir --color=auto'
+	#alias vdir='vdir --color=auto'
 
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
+	alias grep='grep --color=auto'
+	alias fgrep='fgrep --color=auto'
+	alias egrep='egrep --color=auto'
 fi
 
 alias ssh-egram='ssh -A 192.168.50.50'
