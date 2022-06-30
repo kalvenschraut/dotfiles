@@ -52,6 +52,7 @@ set signcolumn=yes
 " {{{ Coc Vim Autocomplete setup
 if empty(system('which node')) == 0
 	packadd! coc.nvim
+	au FileType vue let b:coc_root_patterns = ['.git', '.env', 'package.json', 'tsconfig.json', 'jsconfig.json', 'vite.config.ts', 'nuxt.config.ts']
 	" @yaegassy/coc-volar is for vue 3
 	let g:coc_global_extensions = [
 		\'@yaegassy/coc-volar',
@@ -65,6 +66,7 @@ if empty(system('which node')) == 0
 		\'coc-pyright',
 		\'coc-prettier',
 		\'coc-phpls',
+		\'coc-sh',
 		\'coc-yaml',
 		\'coc-spell-checker'
 	\]
@@ -190,6 +192,7 @@ if empty(system('which node')) == 0
 	nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 	nnoremap <leader>i :CocCommand editor.action.organizeImport<CR>
+	nnoremap <leader>lf :CocCommand eslint.executeAutofix<CR>
 	" end coc vim
 endif
 " }}}
@@ -362,7 +365,7 @@ nmap <leader>x :bp <BAR> bd #<CR>
 map <F2> :vimgrep /stext/ **/*.php \| :copen
 
 " <F8> toggles 'copy/paste mode'
-map <F8> :set invpaste invnumber invlist<C-M>
+map <F8> :exe "set invpaste invnumber invlist signcolumn=" .. (&signcolumn == "yes" ? "no" : "yes")<C-M>
 
 " <F9> <F10> toggles vertcal line at column 80
 map <F9> :set textwidth=80 colorcolumn=+1<C-M>
