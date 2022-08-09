@@ -67,7 +67,7 @@ function color_prompt {
 	# \033[ is how to specify bash color
 	# \033[32m is a color i.e. green see https://dev.to/ifenna__/adding-colors-to-bash-scripts-48g4
 	# \033[01;32m adds bold font weight see above link for codes
-	# also colors and fonts persist until changed again.. so ened the reset color back to normal at the end
+	# also colors and fonts persist until changed again.. so need the reset color back to normal at the end
 	local USER_HOST="\[\033[01;32m\]\u@\h"
 	local CURRENT_LOCATION="\[\033[34m\]\w"
 	local GIT_BRANCH='$(git branch 2> /dev/null | grep -e ^* | sed "s/\*/ on/")'
