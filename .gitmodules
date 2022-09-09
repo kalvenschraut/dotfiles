@@ -25,9 +25,6 @@
 [submodule "vim/bundle/badwolf"]
 	path = vim/pack/bundle/start/badwolf
 	url = https://github.com/sjl/badwolf
-[submodule "vim/bundle/vim-pathogen"]
-	path = vim/pack/bundle/start/vim-pathogen
-	url = https://github.com/tpope/vim-pathogen
 [submodule "vim/bundle/space-vim-dark"]
 	path = vim/pack/bundle/start/space-vim-dark
 	url = https://github.com/liuchengxu/space-vim-dark
