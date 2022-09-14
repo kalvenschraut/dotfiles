@@ -37,6 +37,9 @@
 [submodule "vim/bundle/typescript-vim"]
 	path = vim/pack/bundle/start/typescript-vim
 	url = https://github.com/leafgarland/typescript-vim.git
+[submodule "vim/bundle/gruvbox"]
+	path = vim/pack/bundle/start/gruvbox
+	url = https://github.com/morhetz/gruvbox
 [submodule "vim/bundle/vim-airline-themes"]
 	path = vim/pack/bundle/start/vim-airline-themes
 	url = https://github.com/vim-airline/vim-airline-themes
