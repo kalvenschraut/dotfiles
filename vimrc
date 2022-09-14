@@ -67,6 +67,7 @@ if empty(system('which node')) == 0
 		\'coc-pyright',
 		\'coc-prettier',
 		\'coc-phpls',
+		\'coc-prisma',
 		\'coc-sh',
 		\'coc-yaml',
 		\'coc-spell-checker'
