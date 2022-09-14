@@ -49,3 +49,6 @@
 [submodule "vim/pack/bundle/start/vim-misc"]
 	path = vim/pack/bundle/start/vim-misc
 	url = https://github.com/xolox/vim-misc
+[submodule "vim/pack/bundle/start/vim-colorschemes"]
+	path = vim/pack/bundle/start/vim-colorschemes
+	url = https://github.com/flazz/vim-colorschemes
