@@ -218,14 +218,6 @@ if has("syntax")
 	" Set dark background
 	set background=dark
 
-	" Available colorschemes
-	" - onedark
-	" - maui
-	" - badwolf
-	" - space-vim-dark
-	" - solarized (see below)
-	" - molokai (see below)
-	" - gruvbox
 	let g:gruvbox_contrast_dark = 'hard'
 	colorscheme gruvbox
 
@@ -239,7 +231,7 @@ if has("syntax")
 	"colorscheme molokai
 
 	" let g:syntastic_debug = 3
-	let g:airline_theme = 'gruvbox'
+	let g:airline_theme = 'onedark'
 	" Enable the tab line / buffer list
 	let g:airline#extensions#tabline#enabled = 1
 	" Only show the file name
