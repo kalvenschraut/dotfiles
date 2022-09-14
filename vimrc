@@ -221,6 +221,8 @@ if has("syntax")
 	let g:gruvbox_contrast_dark = 'hard'
 	colorscheme gruvbox
 
+	" othewise maps F8
+	let g:colorscheme_switcher_define_mappings=0
 	nmap <leader>c :echo g:colors_name<CR>
 	nmap <leader>rc :RandomColorScheme<CR>
 	nmap <leader>nc :NextColorScheme<CR>
