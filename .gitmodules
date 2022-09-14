@@ -55,3 +55,6 @@
 [submodule "vim/bundle/vim-airline-themes"]
 	path = vim/pack/bundle/start/vim-airline-themes
 	url = https://github.com/vim-airline/vim-airline-themes
+[submodule "vim/pack/bundle/start/vim-prisma"]
+	path = vim/pack/bundle/start/vim-prisma
+	url = https://github.com/pantharshit00/vim-prisma
