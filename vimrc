@@ -221,6 +221,13 @@ if has("syntax")
 	let g:gruvbox_contrast_dark = 'hard'
 	colorscheme gruvbox
 
+	nmap <leader>c :echo g:colors_name<CR>
+	nmap <leader>rc :RandomColorScheme<CR>
+	nmap <leader>nc :NextColorScheme<CR>
+	nmap <leader>pc :PreviousColorScheme<CR>
+
+
+
 	" Solarized color scheme
 	"let g:solarized_termcolors=256
 	"colorscheme solarized
