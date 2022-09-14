@@ -184,6 +184,10 @@ if empty(system('which node')) == 0
 
 	nnoremap <leader>i :CocCommand editor.action.organizeImport<CR>
 	nnoremap <leader>lf :CocCommand eslint.executeAutofix<CR>
+
+	" Make up/down arrows close the menu
+	inoremap <expr> <Up> pumvisible() ? "\<C-y>\<Up>" : "\<Up>"
+	inoremap <expr> <Down> pumvisible() ? "\<C-y>\<Down>" : "\<Down>"
 	" end coc vim
 endif
 " }}}
