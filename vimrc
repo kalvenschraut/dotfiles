@@ -126,6 +126,9 @@ if empty(system('which node')) == 0
 	nmap <leader>f  :call CocAction('runCommand', 'prettier.formatFile')<CR>
 	xmap <leader>f  :call CocAction('runCommand', 'prettier.formatFile')<CR>
 
+	" auto format prisma files since prettier one isn't working
+	autocmd BufWrite *.prisma call CocAction('format')
+
 	augroup mygroup
 	  autocmd!
 	  " Setup formatexpr specified filetype(s).
