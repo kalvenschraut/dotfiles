@@ -49,6 +49,55 @@ set shortmess+=c
 " diagnostics appear/become resolved.
 set signcolumn=yes
 
+if has("syntax")
+	if &term =~ '256color'
+		" disable Background Color Erase (BCE) so that color schemes
+		" render properly when inside 256-color tmux and GNU screen.
+		" see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+		set t_ut=
+	endif
+
+	" Set 256 color terminal support
+	set t_Co=256
+
+	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+	set termguicolors
+
+	" Enable syntax highlighting
+	syntax on
+	" Set dark background
+	set background=dark
+
+	let g:gruvbox_contrast_dark = 'hard'
+	colorscheme gruvbox
+
+	" othewise maps F8
+	let g:colorscheme_switcher_define_mappings=0
+	nmap <leader>c :echo g:colors_name<CR>
+	nmap <leader>rc :RandomColorScheme<CR>
+	nmap <leader>nc :NextColorScheme<CR>
+	nmap <leader>pc :PreviousColorScheme<CR>
+
+
+
+	" Solarized color scheme
+	"let g:solarized_termcolors=256
+	"colorscheme solarized
+
+	" Molokai color scheme
+	"let g:molokai_original = 1
+	"let g:rehash256 = 1
+	"colorscheme molokai
+
+	" let g:syntastic_debug = 3
+	let g:airline_theme = 'onedark'
+	" Enable the tab line / buffer list
+	let g:airline#extensions#tabline#enabled = 1
+	" Only show the file name
+	let g:airline#extensions#tabline#fnamemod = ':t'
+endif
+
 " {{{ Coc Vim Autocomplete setup
 if empty(system('which node')) == 0
 	packadd! coc.nvim
@@ -93,7 +142,7 @@ if empty(system('which node')) == 0
 	inoremap <silent><expr> <c-space> coc#refresh()
 
 	hi CocSearch ctermfg=12 guifg=#18A3FF
-	hi CocMenuSel ctermbg=109 guibg=#13354A
+	hi CocMenuSel ctermbg=109 guibg=#FFFFFF
 
 	" Use `[g` and `]g` to navigate diagnostics
 	nmap <silent> [g <Plug>(coc-diagnostic-prev)
@@ -200,55 +249,6 @@ endif
 augroup templates
 	autocmd BufNewFile *.vue 0r ~/.vim/templates/sfc.vue
 augroup END
-
-if has("syntax")
-	if &term =~ '256color'
-		" disable Background Color Erase (BCE) so that color schemes
-		" render properly when inside 256-color tmux and GNU screen.
-		" see also http://snk.tuxfamily.org/log/vim-256color-bce.html
-		set t_ut=
-	endif
-
-	" Set 256 color terminal support
-	set t_Co=256
-
-	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-	set termguicolors
-
-	" Enable syntax highlighting
-	syntax on
-	" Set dark background
-	set background=dark
-
-	let g:gruvbox_contrast_dark = 'hard'
-	colorscheme gruvbox
-
-	" othewise maps F8
-	let g:colorscheme_switcher_define_mappings=0
-	nmap <leader>c :echo g:colors_name<CR>
-	nmap <leader>rc :RandomColorScheme<CR>
-	nmap <leader>nc :NextColorScheme<CR>
-	nmap <leader>pc :PreviousColorScheme<CR>
-
-
-
-	" Solarized color scheme
-	"let g:solarized_termcolors=256
-	"colorscheme solarized
-
-	" Molokai color scheme
-	"let g:molokai_original = 1
-	"let g:rehash256 = 1
-	"colorscheme molokai
-
-	" let g:syntastic_debug = 3
-	let g:airline_theme = 'onedark'
-	" Enable the tab line / buffer list
-	let g:airline#extensions#tabline#enabled = 1
-	" Only show the file name
-	let g:airline#extensions#tabline#fnamemod = ':t'
-endif
 
 if has("cmdline_info")
 	" Show the cursor line and column number
