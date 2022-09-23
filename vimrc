@@ -142,7 +142,7 @@ if empty(system('which node')) == 0
 	inoremap <silent><expr> <c-space> coc#refresh()
 
 	hi CocSearch ctermfg=12 guifg=#18A3FF
-	hi CocMenuSel ctermbg=109 guibg=#FFFFFF
+	hi CocMenuSel ctermbg=109 guibg=#13354A
 
 	" Use `[g` and `]g` to navigate diagnostics
 	nmap <silent> [g <Plug>(coc-diagnostic-prev)
