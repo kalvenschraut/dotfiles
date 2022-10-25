@@ -1,0 +1,25 @@
+#!/bin/bash
+WORKSPACE='workspace --no-auto-back-and-forth'
+GOOGLE_CHROME='google-chrome-stable --force-dark-mode'
+MY_EMAIL_APP="$GOOGLE_CHROME --profile-directory=Default --app-id=faolnafnngnfdaknnbpnkhgohbobgegn"
+SUPPORT_APP="$MY_EMAIL_APP --app=https://outlook.office.com/mail/support@rtvision.com"
+
+# need to sleep in between workspace msgs otherwise
+# things can open up in the wrong workspace
+i3-msg "$WORKSPACE 1; append_layout ~/.i3/workspaces/terminal.json;"
+i3-msg "exec xterm"
+sleep 0.2
+i3-msg "$WORKSPACE 2; append_layout ~/.i3/workspaces/browser.json;"
+i3-msg "exec $GOOGLE_CHROME"
+sleep 1
+i3-msg "$WORKSPACE 3; append_layout ~/.i3/workspaces/communications.json"
+# Spotify and teams have issues when other stuff is
+# opening so sleep between those two
+i3-msg "exec spotify"
+sleep 3
+i3-msg "exec teams"
+sleep 5
+i3-msg "exec $SUPPORT_APP"
+# sleep just so my email is on top
+sleep 0.2
+i3-msg "exec $MY_EMAIL_APP"

@@ -1,0 +1,102 @@
+{
+ "border": "normal",
+ "floating": "auto_off",
+ "layout": "tabbed",
+ "marks": [],
+ "percent": 0.473125,
+ "type": "con",
+ "nodes": [
+  {
+   "border": "normal",
+   "current_border_width": 6,
+   "floating": "auto_off",
+   "geometry": {
+    "height": 1060,
+    "width": 945,
+    "x": 1930,
+    "y": 10
+   },
+   "marks": [],
+   "name": "Support Outlook",
+   "percent": 0.5,
+   "swallows": [
+    {
+     "instance": "^outlook.office.com__mail_support@rtvision.com$"
+    }
+   ],
+   "type": "con"
+  },
+  {
+   "border": "none",
+   "current_border_width": 6,
+   "floating": "auto_off",
+   "geometry": {
+    "height": 1038,
+    "width": 945,
+    "x": 4382,
+    "y": 0
+   },
+   "marks": [],
+   "name": "Kalvens Outlook",
+   "percent": 0.5,
+   "swallows": [
+    {
+     "instance": "^crx_faolnafnngnfdaknnbpnkhgohbobgegn$"
+    }
+   ],
+   "type": "con"
+  }
+ ]
+}
+
+{
+ "border": "normal",
+ "floating": "auto_off",
+ "layout": "tabbed",
+ "marks": [],
+ "percent": 0.526875,
+ "type": "con",
+ "nodes": [
+  {
+   "border": "none",
+   "current_border_width": 6,
+   "floating": "auto_off",
+   "geometry": {
+    "height": 1058,
+    "width": 1920,
+    "x": 1970,
+    "y": 50
+   },
+   "marks": [],
+   "name": "Teams",
+   "percent": 0.5,
+   "swallows": [
+    {
+     "instance": "^microsoft teams - preview$"
+    }
+   ],
+   "type": "con"
+  },
+  {
+   "border": "normal",
+   "current_border_width": 4,
+   "floating": "auto_off",
+   "geometry": {
+    "height": 600,
+    "width": 800,
+    "x": 0,
+    "y": 0
+   },
+   "marks": [],
+   "name": "Spotify",
+   "percent": 0.5,
+   "swallows": [
+    {
+     "instance": "^spotify$"
+    }
+   ],
+   "type": "con"
+  }
+ ]
+}
+

@@ -25,7 +25,7 @@ xterm*preeditType: Root
 !xterm*faceName: Terminus
 !xterm*faceName: Droid Sans Mono
 xterm*faceName: Hack
-xterm*faceSize: 10
+xterm*faceSize: 8
 
 ! Trim trailing spaces
 xterm*trimSelection: true
