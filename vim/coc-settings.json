@@ -5,7 +5,7 @@
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   "typescript.preferences.importModuleSpecifier": "non-relative",
-  "volar.completion.tagNameCase": "kebab",
+  "volar.completion.preferredTagNameCase": "kebab",
   "coc.preferences.jumpCommand": "split",
   "ansible.builtin.isWithYamllint": true,
   "cSpell.userWords": [
