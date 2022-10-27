@@ -110,7 +110,7 @@ bindsym $mod+a focus parent
 
 # switch to workspace
 bindsym $mod+section exec workspacer set
-bindsym $mod+Control+section exec workspacer swap
+bindsym $mod+Control+s exec ~/.i3/scripts/swap-workspaces
 bindsym $mod+Shift+section exec workspacer move
 
 bindsym $mod+1 workspace 1
