@@ -328,3 +328,15 @@ client.focused_inactive   $darkblack   $grey        $white          $darkblack  
 client.unfocused          $darkblack   $darkblack   $white          $darkblack  $darkblack
 client.urgent $darkblue   $darkblue    $white       $darkblack      $darkblack  $darkblack
 
+bar {
+    position bottom
+	output primary
+    font pango: Hack 5
+    separator_symbol "  "
+    colors {
+        background $background
+        statusline $black
+        separator #586e75
+    }
+
+}
