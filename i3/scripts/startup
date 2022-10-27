@@ -16,9 +16,9 @@ i3-msg "$WORKSPACE 3; append_layout ~/.i3/workspaces/communications.json"
 # Spotify and teams have issues when other stuff is
 # opening so sleep between those two
 i3-msg "exec spotify"
-sleep 3
-i3-msg "exec teams"
 sleep 5
+i3-msg "exec teams"
+sleep 10
 i3-msg "exec $SUPPORT_APP"
 # sleep just so my email is on top
 sleep 0.2

@@ -152,7 +152,7 @@ bindsym $mod+Shift+C reload
 bindsym $mod+q restart
 
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+Q exit
+bindsym $mod+Shift+Q [class="."] kill, exit
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -301,29 +301,30 @@ default_border  normal 4
 default_floating_border pixel 4
 
 # Custom colors
-set_from_resource $black       color8  #000000
-set_from_resource $darkblack   color0  #000000
-set_from_resource $darkred     color1  #000000
-set_from_resource $red         color9  #000000
-set_from_resource $darkgreen   color2  #000000
-set_from_resource $green       color10 #000000
-set_from_resource $darkyellow  color3  #000000
-set_from_resource $yellow      color11 #000000
-set_from_resource $darkblue    color4  #000000
-set_from_resource $blue        color12 #000000
-set_from_resource $darkmagenta color5  #000000
-set_from_resource $magenta     color13 #000000
-set_from_resource $darkcyan    color6  #000000
-set_from_resource $cyan        color14 #000000
-set_from_resource $white       color7  #000000
-set_from_resource $darkwhite   color15 #000000
+set_from_resource $black       color8  #282828
+set_from_resource $darkblack   color0  #1d2021
+set_from_resource $darkred     color1  #cc241d
+set_from_resource $red         color9  #fb4934
+set_from_resource $darkgreen   color2  #98971a
+set_from_resource $green       color10 #b8bb26
+set_from_resource $darkyellow  color3  #d79921
+set_from_resource $yellow      color11 #fabd2f
+set_from_resource $darkblue    color4  #458588
+set_from_resource $blue        color12 #83a598
+set_from_resource $darkmagenta color5  #b16286
+set_from_resource $magenta     color13 #d3869b
+set_from_resource $darkcyan    color6  #689d6a
+set_from_resource $cyan        color14 #8ec07c
+set_from_resource $white       color7  #fbf2c7
+set_from_resource $darkwhite   color15 #d5c4a1
+set_from_resource $grey        color18 #665c54
 
-set $background  #000000
+set $background  #282828
 set $darkblack   #10151b
 
 # Window colors           border       background   text            indicator    child_border
-client.focused            $green       $green       $darkblack      $darkblack  $darkblack
-client.focused_inactive   $darkblack   $darkblack   $white          $darkblack  $darkblack
+client.focused            $blue        $blue        $darkblack      $darkblack  $darkblack
+client.focused_inactive   $darkblack   $grey        $white          $darkblack  $darkblack
 client.unfocused          $darkblack   $darkblack   $white          $darkblack  $darkblack
 client.urgent $darkblue   $darkblue    $white       $darkblack      $darkblack  $darkblack
 

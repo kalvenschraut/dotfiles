@@ -1,4 +1,3 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
 # vim: ft=sh ts=4
 
 [ -z "$PS1" ] && return
@@ -43,7 +42,7 @@ source_dir ~/.bash.d
 source_dir ~/.bash.d/local/after
 
 # ssh aliases
-alias ssh-eg='ssh -A kalvens@2620:9d:4000:72:136c:fa8:54b:9be1'
+alias ssh-vm='ssh -A kalvens@2620:9d:4000:72:136c:fa8:54b:9be1'
 alias ssh-ws='ssh kalvens@192.168.1.72'
 
 # set a fancy prompt (non-color, unless we know we "want" color)
@@ -105,7 +104,7 @@ if [ -x /usr/bin/dircolors ]; then
 	alias egrep='egrep --color=auto'
 fi
 
-alias ssh-egram='ssh -A 192.168.50.50'
+alias ssh-vm='ssh -A 192.168.50.50'
 
 #current alternative screen directory if the normal one doesn't exist
 ALTSCREENDIR=$HOME/.screen
