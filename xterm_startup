@@ -1,5 +1,4 @@
 #!/bin/bash
-source ~/.bash_profile
 if tmux ls | grep -q 'rtvision-app'
 then
 	tmux attach -t 'rtvision-app'
