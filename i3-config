@@ -152,7 +152,7 @@ bindsym $mod+Shift+C reload
 bindsym $mod+q restart
 
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+Q [class="."] kill, exit
+bindsym $mod+Shift+Q exit
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -207,7 +207,7 @@ bindsym $mod+s layout stacking
 #bindsym $mod+l layout toggle split
 bindsym $mod+w layout tabbed
 
-bindsym $mod+Shift+Escape exec xlock -mode space
+bindsym $mod+Shift+Escape exec xlock -mode matrix
 
 # scrot & gimp - root
 #bindsym --release $mod+Print exec "scrot -e 'mv $f /tmp/ && gimp /tmp/$f'"
@@ -327,16 +327,3 @@ client.focused            $blue        $blue        $darkblack      $darkblack  
 client.focused_inactive   $darkblack   $grey        $white          $darkblack  $darkblack
 client.unfocused          $darkblack   $darkblack   $white          $darkblack  $darkblack
 client.urgent $darkblue   $darkblue    $white       $darkblack      $darkblack  $darkblack
-
-bar {
-    position bottom
-	output primary
-    font pango: Hack 5
-    separator_symbol "  "
-    colors {
-        background $background
-        statusline $black
-        separator #586e75
-    }
-
-}
