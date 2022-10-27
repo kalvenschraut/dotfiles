@@ -214,7 +214,7 @@ bindsym $mod+Shift+Escape exec xlock -mode matrix
 # scrot & gimp - select window or rectangle
 #bindsym $mod+p exec "scrot -s -e 'mv $f /tmp/ && gimp /tmp/$f'"
 # scrot selection to clipboard
-bindsym --release $mod+Shift+s exec "scrot /tmp/%b%d-%H%M%S-partial-screenshot.png -s -e 'xclip -selection clipboard -t image/png -i $f'"
+bindsym --release $mod+Shift+s exec "scrot /tmp/%b%d-%H%M%S-partial-screenshot.png -s -f -e 'xclip -selection clipboard -t image/png -i $f'"
 
 # copy 2fa pin to clipboard
 bindsym $mod+Pause exec "totp pki"
