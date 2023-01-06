@@ -113,7 +113,6 @@ if empty(system('which node')) == 0
 		\'coc-xml',
 		\'coc-highlight',
 		\'coc-html',
-		\'coc-pyright',
 		\'coc-prettier',
 		\'coc-phpls',
 		\'coc-prisma',
@@ -150,6 +149,7 @@ if empty(system('which node')) == 0
 
 	" GoTo code navigation.
 	nmap <silent> gd <Plug>(coc-definition)
+	nmap <silent> gs :call CocAction('runCommand', 'volar.tsserver.goToSourceDefinition')<CR>
 	nmap <silent> gy <Plug>(coc-type-definition)
 	nmap <silent> gi <Plug>(coc-implementation)
 	nmap <silent> gr <Plug>(coc-references)

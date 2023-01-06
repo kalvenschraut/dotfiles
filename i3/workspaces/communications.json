@@ -3,7 +3,7 @@
  "floating": "auto_off",
  "layout": "tabbed",
  "marks": [],
- "percent": 0.473125,
+ "percent": 0.45,
  "type": "con",
  "nodes": [
   {
@@ -54,7 +54,7 @@
  "floating": "auto_off",
  "layout": "tabbed",
  "marks": [],
- "percent": 0.526875,
+ "percent": 0.55,
  "type": "con",
  "nodes": [
   {
@@ -72,7 +72,7 @@
    "percent": 0.5,
    "swallows": [
     {
-     "instance": "^microsoft teams - preview$"
+     "instance": "^crx_cifhbcnohmdccbgoicgdjpfamggdegmo$"
     }
    ],
    "type": "con"

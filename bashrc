@@ -2,6 +2,8 @@
 
 [ -z "$PS1" ] && return
 
+shopt -s globstar
+
 case ${TERM} in
 	xterm*|rxvt*|gnome*|konsole*)
 		export TERM=xterm-256color
