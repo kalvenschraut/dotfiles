@@ -55,3 +55,6 @@
 [submodule "vim/pack/bundle/start/vim-colorschemes"]
 	path = vim/pack/bundle/start/vim-colorschemes
 	url = https://github.com/flazz/vim-colorschemes
+[submodule "vim/pack/bundle/start/copilot.vim"]
+	path = vim/pack/bundle/start/copilot.vim
+	url = git@github.com:github/copilot.vim.git

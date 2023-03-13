@@ -1,10 +1,9 @@
 #!/bin/bash
 WORKSPACE='workspace --no-auto-back-and-forth'
-GOOGLE_CHROME='google-chrome-stable --force-dark-mode'
-PWA_CHROME="$GOOGLE_CHROME --profile-directory=Default"
-MY_EMAIL_APP="$PWA_CHROME --app-id=faolnafnngnfdaknnbpnkhgohbobgegn"
+BRAVE='brave-bin --profile-directory="Default"'
+MY_EMAIL_APP="$BRAVE --app-id=pkooggnaalmfkidjmlhoelhdllpphaga"
 SUPPORT_APP="$MY_EMAIL_APP --app=https://outlook.office.com/mail/support@rtvision.com"
-TEAMS_APP="$PWA_CHROME --app-id=cifhbcnohmdccbgoicgdjpfamggdegmo"
+TEAMS_APP="$BRAVE --app-id=cifhbcnohmdccbgoicgdjpfamggdegmo"
 
 # need to sleep in between workspace msgs otherwise
 # things can open up in the wrong workspace
@@ -12,7 +11,7 @@ i3-msg "$WORKSPACE 1; append_layout ~/.i3/workspaces/terminal.json;"
 i3-msg 'exec "xterm -en UTF-8 -u8 -e \"bash -l -c ~/.xterm_startup; bash\""'
 sleep 0.2
 i3-msg "$WORKSPACE 2; append_layout ~/.i3/workspaces/browser.json;"
-i3-msg "exec $GOOGLE_CHROME https://app.kalvens.rtvision.com"
+i3-msg "exec $BRAVE https://app.kalvens.rtvision.com"
 sleep 3
 i3-msg "$WORKSPACE 3; append_layout ~/.i3/workspaces/communications.json"
 sleep 0.2

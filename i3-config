@@ -11,9 +11,9 @@
 
 #set $mod Mod1
 set $mod Mod4
-set $google_chrome "google-chrome-stable --force-dark-mode"
-set $my_email "google-chrome-stable --force-dark-mode --profile-directory=Default --app-id=faolnafnngnfdaknnbpnkhgohbobgegn"
-set $support_meail "google-chrome-stable --force-dark-mode --profile-directory=Default --app-id=faolnafnngnfdaknnbpnkhgohbobgegn --app=https://outlook.office.com/mail/support@rtvision.com"
+set $brave "brave-bin"
+set $my_email "brave-bin --profile-directory=Default --app-id=pkooggnaalmfkidjmlhoelhdllpphaga"
+set $support_mail "brave-bin --profile-directory=Default --app-id=pkooggnaalmfkidjmlhoelhdllpphaga --app=https://outlook.office.com/mail/support@rtvision.com"
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -49,7 +49,7 @@ bindsym $mod+Shift+x kill
 #bindsym $mod+d exec dmenu_run
 bindsym $mod+d exec rofi -show run
 bindsym $mod+Tab exec rofi -show window
-bindsym $mod+c exec $google_chrome
+bindsym $mod+c exec $brave
 bindsym $mod+v exec $my_email
 bindsym $mod+b exec $support_email
 # There also is the (new) i3-dmenu-desktop which only displays applications
