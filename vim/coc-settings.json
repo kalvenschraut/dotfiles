@@ -30,6 +30,7 @@
     "pnpm",
     "rtvision",
     "stylelint",
+    "suspensible",
     "treeify",
     "tsup",
     "vite",
