@@ -154,6 +154,9 @@ if empty(system('which node')) == 0
 	nmap <silent> gi <Plug>(coc-implementation)
 	nmap <silent> gr <Plug>(coc-references)
 
+	" Open up output channel for debugging an extension
+	nmap <silent> <leader>oc :CocCommand workspace.showOutput<CR>
+
 	" Use K to show documentation in preview window.
 	nnoremap <silent> K :call <SID>show_documentation()<CR>
 

@@ -4,9 +4,13 @@
   "typescript.showDeprecated": true,
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
+  "javascript.preferences.importModuleSpecifier": "non-relative",
   "typescript.preferences.importModuleSpecifier": "non-relative",
-  "volar.completion.preferredTagNameCase": "kebab",
+  "javascript.preferences.importModuleSpecifierEnding": "js",
+  "typescript.preferences.importModuleSpecifierEnding": "js",
+  "volar.takeOverMode.enabled": true,
   "coc.preferences.jumpCommand": "split",
+  "vue.complete.casing.tags": "autoKebab",
   "ansible.builtin.isWithYamllint": true,
   "cSpell.userWords": [
     "Connex",
@@ -37,5 +41,5 @@
     "vitest",
     "vuex"
   ],
-  "coc.preferences.formatOnSaveFiletypes": ["*"]
+  "coc.preferences.formatOnSave": true
 }
