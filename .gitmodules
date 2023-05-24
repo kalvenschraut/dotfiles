@@ -58,3 +58,6 @@
 [submodule "vim/pack/bundle/start/copilot.vim"]
 	path = vim/pack/bundle/start/copilot.vim
 	url = git@github.com:github/copilot.vim.git
+[submodule "vim/pack/bundle/start/ctrlp.vim"]
+	path = vim/pack/bundle/start/ctrlp.vim
+	url = https://github.com/ctrlpvim/ctrlp.vim.git

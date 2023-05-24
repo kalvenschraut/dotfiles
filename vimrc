@@ -248,6 +248,17 @@ if empty(system('which node')) == 0
 endif
 " }}}
 
+" Ctrlp Fuzzy file search
+" {{{
+let g:ctrlp_working_path_mode = 'r'
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+let g:ctrlp_custom_ignore = {
+	\ 'dir':  '\v[\/]\.(git|hg|svn)$',
+	\ 'file': '\v\.(exe|so|dll)$',
+	\ 'link': 'some_bad_symbolic_links',
+	\ }
+" }}}
+
 " templates used on new files
 augroup templates
 	autocmd BufNewFile *.vue 0r ~/.vim/templates/sfc.vue
