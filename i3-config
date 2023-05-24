@@ -11,9 +11,9 @@
 
 #set $mod Mod1
 set $mod Mod4
-set $brave "brave-bin"
-set $my_email "brave-bin --profile-directory=Default --app-id=pkooggnaalmfkidjmlhoelhdllpphaga"
-set $support_mail "brave-bin --profile-directory=Default --app-id=pkooggnaalmfkidjmlhoelhdllpphaga --app=https://outlook.office.com/mail/support@rtvision.com"
+set $brave "flatpak run com.brave.Browser --profile-directory='Default'"
+set $my_email "flatpak run com.brave.Browser --profile-directory='Default' --app-id=pkooggnaalmfkidjmlhoelhdllpphaga"
+set $support_mail "flatpak run com.brave.Browser --profile-directory='Default' --app-id=pkooggnaalmfkidjmlhoelhdllpphaga --app=https://outlook.office.com/mail/support@rtvision.com"
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -227,12 +227,12 @@ bindsym $mod+Pause exec "totp pki"
 
 # --[ EXEC ]-- #
 
-#exec --no-startup-id xrdb ~/.Xresources
+exec --no-startup-id xrdb ~/.Xdefaults
 #exec --no-startup-id xhost +local:vmuser
 exec --no-startup-id xrandr --dpi 144
+exec --no-startup-id fbsetroot -solid black
 #exec --no-startup-id ssh -L 3333:github.com:22 -N ssh.rtvision.com &
 #exec --no-startup-id xset m 5/4 1
-#exec --no-startup-id fbsetroot -solid black
 #exec --no-startup-id conky
 #exec --no-startup-id tint2
 #exec --no-startup-id polybar -c ~/.config/polybar/config bottom

@@ -1,7 +1,7 @@
 #!/bin/bash
 WORKSPACE='workspace --no-auto-back-and-forth'
-BRAVE='brave-bin --profile-directory="Default"'
-MY_EMAIL_APP="$BRAVE --app-id=pkooggnaalmfkidjmlhoelhdllpphaga"
+BRAVE='flatpak run com.brave.Browser --profile-directory="Default"'
+MY_EMAIL_APP="$BRAVE --app-id=faolnafnngnfdaknnbpnkhgohbobgegn"
 SUPPORT_APP="$MY_EMAIL_APP --app=https://outlook.office.com/mail/support@rtvision.com"
 TEAMS_APP="$BRAVE --app-id=cifhbcnohmdccbgoicgdjpfamggdegmo"
 
@@ -17,7 +17,7 @@ i3-msg "$WORKSPACE 3; append_layout ~/.i3/workspaces/communications.json"
 sleep 0.2
 # Spotify and teams have issues when other stuff is
 # opening so sleep between those two
-i3-msg "exec spotify"
+i3-msg "exec flatpak run com.spotify.Client"
 sleep 1
 i3-msg "exec $TEAMS_APP"
 sleep 0.2

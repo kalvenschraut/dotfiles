@@ -128,3 +128,11 @@ bind -f ~/.inputrc
 
 export PNPM_HOME="/home/kalvens/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
+
+# pnpm
+export PNPM_HOME="/home/kalvens/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
