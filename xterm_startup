@@ -3,5 +3,5 @@ if tmux ls | grep -q 'rtvision-app'
 then
 	tmux attach -t 'rtvision-app'
 else
-	~/InitTmux.sh
+	~/init_tmux
 fi
