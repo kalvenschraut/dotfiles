@@ -1,0 +1,5 @@
+#!/bin/bash
+
+git pull origin master
+git submodule update --init --recursive $1
+cd ~/.vim/pack/bundle/opt/coc.nvim && npm i && git checkout yarn.lock && cd -
