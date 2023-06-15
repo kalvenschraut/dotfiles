@@ -327,3 +327,15 @@ client.focused            $blue        $blue        $darkblack      $darkblack  
 client.focused_inactive   $darkblack   $grey        $white          $darkblack  $darkblack
 client.unfocused          $darkblack   $darkblack   $white          $darkblack  $darkblack
 client.urgent $darkblue   $darkblue    $white       $darkblack      $darkblack  $darkblack
+
+bar {
+    position bottom
+    output HDMI-0
+    font pango: Hack 6
+    separator_symbol "  "
+    colors {
+        background $background
+        statusline $black
+        separator #586e75
+    }
+}
