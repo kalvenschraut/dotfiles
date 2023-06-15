@@ -22,23 +22,23 @@ install_home()
 		then
 			local dest_file_name=$(basename "$file" .tpl)
 			local dest_file_path="$dest_dir/.$dest_file_name"
-			read -p "add ${dest_file_name} to home? (y/n) " -i "y" -e ADD_FILE
-			if [[ $ADD_FILE == "y" ]]
+			read -p "add ${dest_file_name} to home? (Y/n) " -e ADD_FILE
+			if [[ $ADD_FILE != "n" ]]
 			then
 				install_file "$file" "$dest_file_path"
 			fi
 		fi
 	done
 
-	read -p "add vim config? (y/n) " -i "y" -e ADD_FILE
-	if [[ $ADD_FILE == "y" ]]
+	read -p "add vim config? (Y/n) " ADD_FILE
+	if [[ $ADD_FILE != "n" ]]
 	then
 		install_file vim "$dest_dir/.vim"
 		install_file vimrc "$dest_dir/.vimrc"
 	fi
 
-	read -p "add i3 config? (y/n) " -i "y" -e ADD_FILE
-	if [[ $ADD_FILE == "y" ]]
+	read -p "add i3 config? (Y/n) " ADD_FILE
+	if [[ $ADD_FILE != "n" ]]
 	then
 		install_file i3-config "$dest_dir/.config/i3/config"
 		install_file i3 "$dest_dir/.i3"
@@ -46,15 +46,15 @@ install_home()
 
 	if [[ -d "$dest_dir/.config/gtk-3.0" ]]
 	then
-		read -p "add gtk settings (sets system prefer dark mode for applications if system uses gtk)? (y/n) " -i "y" -e ADD_FILE
-		if [[ $ADD_FILE == "y" ]]
+		read -p "add gtk settings (sets system prefer dark mode for applications if system uses gtk)? (Y/n) " -e ADD_FILE
+		if [[ $ADD_FILE != "n" ]]
 		then
 			install_file gtk-settings.ini "$dest_dir/.config/gtk-3.0/gtk-settings.ini"
 		fi
 	fi
 
-	read -p "add tmux startup script? (y/n) " -i "y" -e ADD_FILE
-	if [[ $ADD_FILE == "y" ]]
+	read -p "add tmux startup script? (Y/n) " ADD_FILE
+	if [[ $ADD_FILE != "n" ]]
 	then
 		install_file init_tmux "$dest_dir/init_tmux"
 	fi
