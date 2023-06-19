@@ -1,86 +1,97 @@
 #!/bin/bash
-#
-# Dotfiles installation script
-# Author: Matt Adams
-#
-# vim: ft=sh
-
-post_install_actions()
-{
+post_install_actions() {
 	source ~/.bashrc
 }
 
-install_home()
-{
+install_home() {
 	local dest_dir="$HOME"
-	local excluded="$(basename $0) README.md install update i3-config gtk-settings.ini i3 init_tmux vim vimrc"
+	local excluded="$(basename $0) README.md install update i3-config gtk-settings.ini i3 init_tmux vim vimrc nvim"
 
 	local file
-	for file in *
-	do
-		if ! element_exists "$file" "$excluded"
-		then
+	for file in *; do
+		if ! element_exists "$file" "$excluded"; then
 			local dest_file_name=$(basename "$file" .tpl)
 			local dest_file_path="$dest_dir/.$dest_file_name"
 			read -p "add ${dest_file_name} to home? (Y/n) " -e ADD_FILE
-			if [[ $ADD_FILE != "n" ]]
-			then
+			if [[ $ADD_FILE != "n" ]]; then
 				install_file "$file" "$dest_file_path"
 			fi
 		fi
 	done
 
 	read -p "add vim config? (Y/n) " ADD_FILE
-	if [[ $ADD_FILE != "n" ]]
-	then
+	if [[ $ADD_FILE != "n" ]]; then
 		install_file vim "$dest_dir/.vim"
 		install_file vimrc "$dest_dir/.vimrc"
 	fi
 
 	read -p "add i3 config? (Y/n) " ADD_FILE
-	if [[ $ADD_FILE != "n" ]]
-	then
+	if [[ $ADD_FILE != "n" ]]; then
 		install_file i3-config "$dest_dir/.config/i3/config"
 		install_file i3 "$dest_dir/.i3"
 	fi
 
-	if [[ -d "$dest_dir/.config/gtk-3.0" ]]
-	then
+	if [[ -d "$dest_dir/.config/gtk-3.0" ]]; then
 		read -p "add gtk settings (sets system prefer dark mode for applications if system uses gtk)? (Y/n) " -e ADD_FILE
-		if [[ $ADD_FILE != "n" ]]
-		then
+		if [[ $ADD_FILE != "n" ]]; then
 			install_file gtk-settings.ini "$dest_dir/.config/gtk-3.0/gtk-settings.ini"
 		fi
 	fi
 
 	read -p "add tmux startup script? (Y/n) " ADD_FILE
-	if [[ $ADD_FILE != "n" ]]
-	then
+	if [[ $ADD_FILE != "n" ]]; then
 		install_file init_tmux "$dest_dir/init_tmux"
+	fi
+
+	read -p "add neovim? (Y/n) " ADD_FILE
+	if [[ $ADD_FILE != "n" ]]; then
+		if ! which node &>/dev/null; then
+			echo 'Node not found in path, it required to install neovim'
+		else
+			install_file vim "$dest_dir/.vim"
+			install_file nvim "$dest_dir/.config/nvim"
+			if [[ ! -d ~/.local/share/nvim/site/pack/packer ]]; then
+				git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+			fi
+
+			if ! which pnpm &>/dev/null; then
+				echo 'Installing pnpm'
+				curl -fsSL https://get.pnpm.io/install.sh | sh -
+			fi
+
+			if ! which prettierd &>/dev/null; then
+				echo 'Adding prettierd for ts/js/vue neovim formatting'
+				pnpm install -g @fsouza/prettierd
+			fi
+			if ! which cspell &>/dev/null; then
+				echo 'Adding cspell for code spelling checking'
+				pnpm install -g cspell
+			fi
+
+			if ! which shfmt &>/dev/null; then
+				echo 'package shfmt not found, install using local OS package manager for bash formatting'
+			fi
+		fi
 	fi
 
 	post_install_actions
 }
 
-install_file()
-{
+install_file() {
 	local file="$1"
 	local dest_file_path="$2"
-	if [[ -e $dest_file_path ]] || \
-		[[ -L $dest_file_path ]] # Can be a broken symlink
-	then
+	if [[ -e $dest_file_path ]] ||
+		[[ -L $dest_file_path ]]; then # Can be a broken symlink
 		if [[ -e $dest_file_path ]] &&
-			diff -q "$file" "$dest_file_path" > /dev/null
-		then
+			diff -q "$file" "$dest_file_path" >/dev/null; then
 			echo "dotfiles: identical $dest_file_path"
-		elif $replace_all
-		then
+		elif $replace_all; then
 			replace_file "$file" "$dest_file_path"
 		else
 			read -p "dotfiles: overwrite ${dest_file_path}? [yn] "
 			case $REPLY in
-				'y') replace_file "$file" "$dest_file_path" ;;
-				'n') echo "dotfiles: skipping $dest_file_path" ;;
+			'y') replace_file "$file" "$dest_file_path" ;;
+			'n') echo "dotfiles: skipping $dest_file_path" ;;
 			esac
 		fi
 	else
@@ -88,39 +99,33 @@ install_file()
 	fi
 }
 
-replace_file()
-{
+replace_file() {
 	local file="$1"
 	local dest_file_path="$2"
 	remove "$dest_file_path"
 	link_file "$file" "$dest_file_path"
 }
 
-link_file()
-{
+link_file() {
 	local file="$1"
 	local dest_file_path="$2"
-	if [[ $file =~ \.tpl$ ]]
-	then
+	if [[ $file =~ \.tpl$ ]]; then
 		echo "dotfiles: generating $dest_file_path"
-		bash "$file" > "$dest_file_path"
+		bash "$file" >"$dest_file_path"
 	else
 		echo "dotfiles: linking $dest_file_path"
 		ln -s "$(pwd)/$file" "$dest_file_path"
 	fi
 }
 
-element_exists()
-{
+element_exists() {
 	local elem="$1"
 	shift
 	local arr=($@)
 	local i
 
-	for i in ${arr[@]}
-	do
-		if [[ $i == $elem ]]
-		then
+	for i in ${arr[@]}; do
+		if [[ $i == $elem ]]; then
 			return 0
 		fi
 	done
@@ -128,14 +133,12 @@ element_exists()
 	return 1
 }
 
-remove()
-{
+remove() {
 	local file="$1"
 
 	# Don't recursively remove symbolic links to directories,
 	# just real directories.
-	if [[ -d $file ]] && [[ ! -h $file ]]
-	then
+	if [[ -d $file ]] && [[ ! -L $file ]]; then
 		rm -rf "$file"
 	else
 		rm -f "$file"

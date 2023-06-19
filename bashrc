@@ -46,6 +46,9 @@ source_dir ~/.bash.d/local/after
 # ssh aliases
 alias ssh-vm='ssh -A kalvens@2620:9d:4000:72:136c:fa8:54b:9be1'
 alias ssh-ws='ssh kalvens@192.168.1.72'
+alias nvim='nvim || vim || vi'
+alias vim='nvim || vim || vi'
+alias vi='nvim || vim || vi'
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
