@@ -1,0 +1,54 @@
+! vim: ft=xdefaults
+
+xcalc*geometry: 300x370
+xcalc*font: -*-clean-*-*-*-*-*-*-*-*-*-*-*-*
+
+! Buttons =====================================================
+! Spacing
+xcalc*button1*vertDistance: 5
+xcalc*button2*vertDistance: 5
+xcalc*button3*vertDistance: 5
+xcalc*button4*vertDistance: 5
+xcalc*button5*vertDistance: 5
+xcalc*button21*vertDistance: 5
+xcalc*button22*vertDistance: 5
+xcalc*button23*vertDistance: 5
+xcalc*button24*vertDistance: 5
+xcalc*button25*vertDistance: 5
+! Background
+xcalc*Command*background: #181818
+xcalc*Command*borderColor: #202020
+! Fix labels
+xcalc*button2.label: x^2
+xcalc*button3.label: v-
+xcalc*button20.label: /
+! CE
+xcalc*button4.background: firebrick4
+xcalc*button4.borderColor: firebrick3
+! AC
+xcalc*button5.background: firebrick3
+xcalc*button5.borderColor: firebrick1
+! Numpad
+xcalc*button22.background: #202020
+xcalc*button22.borderColor: #262626
+xcalc*button23.background: #202020
+xcalc*button23.borderColor: #262626
+xcalc*button24.background: #202020
+xcalc*button24.borderColor: #262626
+xcalc*button27.background: #202020
+xcalc*button27.borderColor: #262626
+xcalc*button28.background: #202020
+xcalc*button28.borderColor: #262626
+xcalc*button29.background: #202020
+xcalc*button29.borderColor: #262626
+xcalc*button32.background: #202020
+xcalc*button32.borderColor: #262626
+xcalc*button33.background: #202020
+xcalc*button33.borderColor: #262626
+xcalc*button34.background: #202020
+xcalc*button34.borderColor: #262626
+xcalc*button37.background: #202020
+xcalc*button37.borderColor: #262626
+! =
+xcalc*button40.background: dark olive green
+xcalc*button40.borderColor: olive drab

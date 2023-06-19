@@ -13,7 +13,7 @@
   "percent": 1,
   "swallows": [
     {
-      "instance": "^xterm$"
+      "instance": "^kitty$"
     }
   ],
   "type": "con"

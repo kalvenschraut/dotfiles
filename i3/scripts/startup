@@ -8,7 +8,7 @@ TEAMS_APP="$BRAVE --app-id=cifhbcnohmdccbgoicgdjpfamggdegmo"
 # need to sleep in between workspace msgs otherwise
 # things can open up in the wrong workspace
 i3-msg "$WORKSPACE 1; append_layout ~/.i3/workspaces/terminal.json;"
-i3-msg 'exec "xterm -en UTF-8 -u8 -e \"bash -l -c ~/.xterm_startup; bash\""'
+i3-msg 'exec "kitty bash -l -c \"~/.terminal_startup; bash\"'
 sleep 0.2
 i3-msg "$WORKSPACE 2; append_layout ~/.i3/workspaces/browser.json;"
 i3-msg "exec $BRAVE https://app.kalvens.rtvision.com"

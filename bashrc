@@ -5,19 +5,18 @@
 shopt -s globstar
 
 case ${TERM} in
-	xterm*|rxvt*|gnome*|konsole*)
-		export TERM=xterm-256color
-		export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\007"'
-		;;
-	screen*)
-		export TERM=screen-256color
-		export PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\033\\"'
-		;;
+xterm* | rxvt* | gnome* | konsole*)
+	export TERM=xterm-256color
+	export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\007"'
+	;;
+screen*)
+	export TERM=screen-256color
+	export PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\033\\"'
+	;;
 esac
 
-
 parse_git_branch() {
-	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ on \1/'
+	git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ on \1/'
 }
 
 source_dir() {
@@ -32,12 +31,14 @@ source_dir() {
 	fi
 }
 
-gfbs () {
-	test -z "$1" && { echo "Please provide the bugfix name";  return; }
+gfbs() {
+	test -z "$1" && {
+		echo "Please provide the bugfix name"
+		return
+	}
 	git fetch -p
 	git flow bugfix start $1 $(git branch -a | grep -E 'remotes.*release' | sed 's%remotes/origin/%%' | sort | tail -n1 | xargs)
 }
-
 
 source_dir ~/.bash.d/local/before
 source_dir ~/.bash.d
@@ -46,13 +47,10 @@ source_dir ~/.bash.d/local/after
 # ssh aliases
 alias ssh-vm='ssh -A kalvens@2620:9d:4000:72:136c:fa8:54b:9be1'
 alias ssh-ws='ssh kalvens@192.168.1.72'
-alias nvim='nvim || vim || vi'
-alias vim='nvim || vim || vi'
-alias vi='nvim || vim || vi'
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-	xterm-color|*-256color) color_prompt=yes;;
+xterm-color | *-256color) color_prompt=yes ;;
 esac
 
 if [ -n "$force_color_prompt" ]; then
@@ -90,11 +88,11 @@ unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
-	xterm*|rxvt*)
-		PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-		;;
-	*)
-		;;
+xterm* | rxvt*)
+	PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+	;;
+*) ;;
+
 esac
 
 # enable color support of ls and also add handy aliases
@@ -120,10 +118,9 @@ if [ ! -d "/var/run/screen" ]; then
 	export SCREENDIR=$HOME/.screen
 fi
 
-
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
 alias ipv6-randip='dd if=/dev/urandom bs=8 count=1 2>/dev/null | od -x -A n | sed -e "s/^ //" -e "s/ /:/g" -e "s/:0*/:/g" -e "s/^0*//"'
 
@@ -135,7 +132,7 @@ export PATH="$PNPM_HOME:$PATH:/home/kalvens/.local/bin"
 # pnpm
 export PNPM_HOME="/home/kalvens/.local/share/pnpm"
 case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
+*":$PNPM_HOME:"*) ;;
+*) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end

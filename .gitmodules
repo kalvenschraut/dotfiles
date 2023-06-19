@@ -61,3 +61,6 @@
 [submodule "vim/pack/bundle/start/ctrlp.vim"]
 	path = vim/pack/bundle/start/ctrlp.vim
 	url = https://github.com/ctrlpvim/ctrlp.vim.git
+[submodule "Xresources-themes"]
+	path = Xresources-themes
+	url = https://github.com/janoamaral/Xresources-themes.git
