@@ -155,8 +155,10 @@ local typescriptConfig = {
 	}
 }
 
+local util = require('lspconfig.util');
 lspConfig.volar.setup({
 	filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
+	root_dir = util.root_pattern('.git'),
 	init_options = {
 		typescript = typescriptConfig,
 		javascript = typescriptConfig,
@@ -165,6 +167,11 @@ lspConfig.volar.setup({
 				casing = {
 					tags = 'autoKebab'
 				}
+			}
+		},
+		volar = {
+			takeOverMode = {
+				extension = '*.ts|vue'
 			}
 		}
 	}
