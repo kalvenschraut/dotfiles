@@ -47,3 +47,10 @@ vim.keymap.set('n', '<leader>x', '<cmd>bd<CR>')
 
 -- fold remap
 vim.keymap.set('n', '<Space>', 'za')
+vim.keymap.set('n', '<leader>/', '<cmd>nohlsearch<CR>');
+
+vim.keymap.set({ 'c', 'i', 'v', 'n' }, '<F8>', function()
+	-- Closest thing to a ternary in lua
+	local signColumnValue = (vim.wo.signcolumn == 'yes' and 'no') or 'yes';
+	return ':set invpaste invnumber invlist relativenumber! signcolumn=' .. signColumnValue .. '<CR>';
+end, { expr = true })
