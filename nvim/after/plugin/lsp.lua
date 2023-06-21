@@ -4,7 +4,6 @@ lsp.preset('recommended')
 
 lsp.ensure_installed({
 	'volar',
-	'tsserver',
 	'eslint',
 	'rust_analyzer',
 	'jsonls',
