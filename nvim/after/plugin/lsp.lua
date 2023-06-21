@@ -170,7 +170,7 @@ lspConfig.volar.setup({
 		},
 		volar = {
 			takeOverMode = {
-				extension = '*.ts|vue'
+				extension = '*.ts|vue|js|mjs|cjs'
 			}
 		}
 	}
