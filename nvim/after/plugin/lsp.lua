@@ -71,7 +71,6 @@ nullLs.setup({
 		nullLs.builtins.formatting.shfmt.with({
 			filetypes = { 'sh', 'bash' }
 		}),
-		nullLs.builtins.completion.spell,
 		cSpell.diagnostics.with({
 			config = cSpellConfig,
 			diagnostics_postprocess = function(diagnostic)
@@ -87,12 +86,12 @@ local allowedFormatters = {
 	lua_ls = true,
 	['null-ls'] = true
 }
-local lspFormatting = function(bufnr, async)
+local lspFormatting = function(buffer, async)
 	vim.lsp.buf.format({
 		filter = function(client)
 			return allowedFormatters[client.name]
 		end,
-		bufnr = bufnr,
+		bufnr = buffer,
 		async = async,
 		timeout_ms = 2000
 	})
