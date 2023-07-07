@@ -9,12 +9,30 @@ vim.keymap.set('n', '<leader>ps', function()
 	builtin.grep_string({ search = vim.fn.input("Grep > ") });
 end)
 
+
+local actions = require('telescope.actions');
 telescope.setup({
 	defaults = {
 		mappings = {
 			i = {
 				['<C-j>'] = 'move_selection_next',
-				['<C-k>'] = 'move_selection_previous'
+				['<C-k>'] = 'move_selection_previous',
+				['<C-o>'] = function(prompt_buffer)
+					vim.cmd('cexpr []');
+					actions.send_to_qflist(prompt_buffer);
+					vim.cmd([[
+						if !empty(getqflist())
+							let s:prev_val = ""
+							for d in getqflist()
+								let s:curr_val = bufname(d.bufnr)
+								if (s:curr_val != s:prev_val)
+									exec "edit " . s:curr_val
+								endif
+								let s:prev_val = s:curr_val
+							endfor
+						endif
+					]])
+				end
 			}
 		}
 	}
