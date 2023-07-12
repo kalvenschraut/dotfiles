@@ -1,4 +1,8 @@
 local bufferLine = require('bufferline')
+
+vim.keymap.set({ "n", "v", "i" }, "gt", ":BufferLinePick<CR>")
+vim.keymap.set({ "n", "v", "i" }, "gx", ":BufferLinePickClose<CR>")
+
 bufferLine.setup({
 	options = {
 		diagnostics = 'nvim_lsp',
