@@ -48,3 +48,9 @@ vim.opt.splitright = true
 
 -- disable mouse
 vim.opt.mouse = nil
+
+vim.cmd([[
+augroup templates
+    autocmd BufNewFile *.vue 0r ~/.vim/templates/sfc.vue
+augroup END
+]])
