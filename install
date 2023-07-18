@@ -48,11 +48,8 @@ install_home() {
 		if ! which node &>/dev/null; then
 			echo 'Node not found in path, it required to install neovim'
 		else
-			install_file vim "$dest_dir/.vim"
+			install_file nvim "$dest_dir/.nvim"
 			install_file nvim "$dest_dir/.config/nvim"
-			if [[ ! -d ~/.local/share/nvim/site/pack/packer ]]; then
-				git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-			fi
 
 			if ! which pnpm &>/dev/null; then
 				echo 'Installing pnpm'

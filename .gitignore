@@ -2,5 +2,9 @@ vim/swaps/*
 !vim/swaps/.keep
 vim/undo/*
 !vim/undo/.keep
+nvim/swaps/*
+!nvim/swaps/.keep
+nvim/undo/*
+!nvim/undo/.keep
 vim/.netrwhist
 psql/history-postgres

@@ -1,1 +1,1 @@
-require("kalvens")
+require("config")

@@ -14,9 +14,9 @@ vim.opt.wrap = false
 
 
 vim.opt.undofile = true
-vim.opt.undodir = os.getenv('HOME') .. '/.vim/undo'
-vim.opt.directory = os.getenv('HOME') .. '/.vim/swaps'
-vim.opt.backupdir = os.getenv('HOME') .. '/.vim/backups'
+vim.opt.undodir = os.getenv('HOME') .. '/.nvim/undo'
+vim.opt.directory = os.getenv('HOME') .. '/.nvim/swaps'
+vim.opt.backupdir = os.getenv('HOME') .. '/.nvim/backups'
 
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
@@ -51,6 +51,6 @@ vim.opt.mouse = nil
 
 vim.cmd([[
 augroup templates
-    autocmd BufNewFile *.vue 0r ~/.vim/templates/sfc.vue
+    autocmd BufNewFile *.vue 0r ~/.nvim/templates/sfc.vue
 augroup END
 ]])
