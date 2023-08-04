@@ -37,7 +37,13 @@ gfbs() {
 		return
 	}
 	git fetch -p
-	git flow bugfix start $1 $(git branch -a | grep -E 'remotes.*release' | sed 's%remotes/origin/%%' | sort | tail -n1 | xargs)
+	local current_release_branch="$(git branch -a | grep -E 'remotes.*release' | sed 's%remotes/origin/%%' | sort | tail -n1 | xargs)"
+	test -z "$current_release_branch" && {
+		echo "Could not find the current release branch"
+		return
+	}
+	git checkout "$current_release_branch"
+	git flow bugfix start "$1" "$current_release_branch"
 }
 
 source_dir ~/.bash.d/local/before
