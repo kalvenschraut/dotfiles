@@ -127,12 +127,11 @@ fi
 alias ipv6-randip='dd if=/dev/urandom bs=8 count=1 2>/dev/null | od -x -A n | sed -e "s/^ //" -e "s/ /:/g" -e "s/:0*/:/g" -e "s/^0*//"'
 
 bind -f ~/.inputrc
-
-export PNPM_HOME="/home/kalvens/.local/share/pnpm"
-export PATH="$PNPM_HOME:$PATH:/home/kalvens/.local/bin"
+export LAUNCH_EDITOR="$HOME/launch_editor"
+alias nvim-server="nvim --listen ~/.cache/nvim/server.pipe"
 
 # pnpm
-export PNPM_HOME="/home/kalvens/.local/share/pnpm"
+export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
 *":$PNPM_HOME:"*) ;;
 *) export PATH="$PNPM_HOME:$PATH" ;;

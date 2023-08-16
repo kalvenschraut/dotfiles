@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo 'test'
+nvim --server ~/.cache/nvim/server.pipe --remote $1
+nvim --server ~/.cache/nvim/server.pipe --remote-send ":call cursor($2,$3)<CR>"

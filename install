@@ -5,7 +5,7 @@ post_install_actions() {
 
 install_home() {
 	local dest_dir="$HOME"
-	local excluded="$(basename $0) README.md install update i3-config gtk-settings.ini i3 init_tmux vim vimrc nvim"
+	local excluded="$(basename $0) README.md install update i3-config gtk-settings.ini i3 init_tmux launch_editor vim vimrc nvim psqlrc"
 
 	local file
 	for file in *; do
@@ -19,6 +19,12 @@ install_home() {
 		fi
 	done
 
+	read -p "add psqlrc config? (Y/n) " ADD_FILE
+	if [[ $ADD_FILE != "n" ]]; then
+		mkdir -p "$dest_dir/.psql"
+		install_file psqlrc "$dest_dir/.psqlrc"
+	fi
+
 	read -p "add vim config? (Y/n) " ADD_FILE
 	if [[ $ADD_FILE != "n" ]]; then
 		install_file vim "$dest_dir/.vim"
@@ -27,6 +33,7 @@ install_home() {
 
 	read -p "add i3 config? (Y/n) " ADD_FILE
 	if [[ $ADD_FILE != "n" ]]; then
+		mkdir -p "$dest_dir/.config/i3"
 		install_file i3-config "$dest_dir/.config/i3/config"
 		install_file i3 "$dest_dir/.i3"
 	fi
@@ -41,6 +48,11 @@ install_home() {
 	read -p "add tmux startup script? (Y/n) " ADD_FILE
 	if [[ $ADD_FILE != "n" ]]; then
 		install_file init_tmux "$dest_dir/init_tmux"
+	fi
+
+	read -p "add launch editor script? (Y/n) " ADD_FILE
+	if [[ $ADD_FILE != "n" ]]; then
+		install_file launch_editor "$dest_dir/launch_editor"
 	fi
 
 	read -p "add neovim? (Y/n) " ADD_FILE
