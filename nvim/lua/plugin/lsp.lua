@@ -48,7 +48,7 @@ return {
 					lspConfig.volar.setup({
 						filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
 						root_dir = util.root_pattern('.git'),
-						init_options = {
+						settings = {
 							typescript = typescriptConfig,
 							javascript = typescriptConfig,
 							vue = {
