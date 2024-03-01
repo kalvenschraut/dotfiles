@@ -11,9 +11,9 @@ tmux start-server
 
 # create a new tmux sessiona and -x and -y come from https://unix.stackexchange.com/questions/569729/tmux-not-splitting-panes-with-desired-percentage-size
 tmux new-session -d -s $SESSION1 -c $BASE_REPO_DIR/ -n 'ui' -x "$(tput cols)" -y "$(tput lines)"
-tmux split-window -h -p 75 -c $BASE_REPO_DIR
+tmux split-window -h -l 75% -c $BASE_REPO_DIR
 tmux select-pane -t ui.left
-tmux split-window -v -p 40 -c $BASE_REPO_DIR
+tmux split-window -v -l 40% -c $BASE_REPO_DIR
 tmux select-pane -t ui.right
 
 tmux new-window -t $SESSION1:2 -n 'docker' -c $BASE_REPO_DIR
@@ -21,7 +21,7 @@ tmux new-window -t $SESSION1:3 -n 'api' -c $BASE_REPO_DIR/apps/app-api
 tmux new-window -t $SESSION1:4 -n 'packages' -c $BASE_REPO_DIR/packages
 
 tmux new-window -t $SESSION1:5 -n 'add-in' -c $BASE_REPO_DIR/apps/add-in-word-excel
-tmux split-window -h -p 75 -t add-in -c $BASE_REPO_DIR/apps/add-in-word-excel
+tmux split-window -h -l 75% -t add-in -c $BASE_REPO_DIR/apps/add-in-word-excel
 tmux select-pane -t add-in.right
 
 tmux new-window -t $SESSION1:6 -n 'store' -c $BASE_REPO_DIR/apps/app-store
@@ -29,15 +29,15 @@ tmux new-window -t $SESSION1:7 -n 'aws-terraform' -c $BASE_REPO_DIR
 tmux new-window -t $SESSION1:8 -n 'db' -c $BASE_REPO_DIR
 
 tmux new-window -t $SESSION1:9 -n 'open-source' -c $OPEN_SOURCE_DIR
-tmux split-window -h -p 70 -t open-source -c $OPEN_SOURCE_DIR
-tmux split-window -v -p 5 -t open-source.left -c $OPEN_SOURCE_DIR
+tmux split-window -h -l 70% -t open-source -c $OPEN_SOURCE_DIR
+tmux split-window -v -l 5% -t open-source.left -c $OPEN_SOURCE_DIR
 tmux select-pane -t open-source.right
 
 # Need to sleep to make sure shells are active
-sleep 1;
+sleep 1
 tmux send-keys -t ui.top-left 'sleep 30' Enter 'pnpm dev --filter=app-ui' Enter
 tmux send-keys -t ui.bottom-left 'pnpm dev --filter=app-ui^...' Enter
-tmux send-keys -t docker 'docker compose up' Enter
+tmux send-keys -t docker 'make' Enter
 tmux send-keys -t add-in.left 'pnpm start' Enter
 tmux send-keys -t aws-terraform 'ssh -A ssh' Enter 'cd aws-terraform' Enter
 tmux send-keys -t db 'sleep 10' Enter 'psql -U postgres -h localhost rtvision' Enter
@@ -49,18 +49,18 @@ tmux select-window -t $SESSION1:ui
 
 # start other sessions
 tmux new-session -d -s $SESSION2 -n 'bidvault' -x "$(tput cols)" -y "$(tput lines)" -c $EGRAM_HOME/bidvault
-tmux split-window -h -p 75 -t bidvault -c $EGRAM_HOME/bidvault
-tmux split-window -v -p 30 -t bidvault.left -c $EGRAM_HOME/bidvault
+tmux split-window -h -l 75% -t bidvault -c $EGRAM_HOME/bidvault
+tmux split-window -v -l 30% -t bidvault.left -c $EGRAM_HOME/bidvault
 tmux select-pane -t bidvault.right
 
 tmux new-window -t $SESSION2:2 -n 'invoice' -c $EGRAM_HOME/invoice-2.x
-tmux split-window -h -p 75 -t invoice -c $EGRAM_HOME/invoice-2.x
-tmux split-window -v -p 30 -t invoice.left -c $EGRAM_HOME/invoice-2.x
+tmux split-window -h -l 75% -t invoice -c $EGRAM_HOME/invoice-2.x
+tmux split-window -v -l 30% -t invoice.left -c $EGRAM_HOME/invoice-2.x
 tmux select-pane -t invoice.right
 
 tmux new-window -t $SESSION2:3 -n 'db' -c $EGRAM_HOME
 
-sleep 1;
+sleep 1
 tmux send-keys -t bidvault.top-left 'pnpm start'
 tmux send-keys -t bidvault.bottom-left 'tail error_log -f -c 30' Enter
 
