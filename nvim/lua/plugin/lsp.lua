@@ -57,11 +57,6 @@ return {
 										tags = 'autoKebab'
 									}
 								}
-							},
-							volar = {
-								takeOverMode = {
-									extension = '*.ts|vue|js|mjs|cjs'
-								}
 							}
 						}
 					})
@@ -188,6 +183,7 @@ return {
 			lsp.preset('recommended')
 			lsp.ensure_installed({
 				'volar',
+				'tsserver',
 				'eslint',
 				'rust_analyzer',
 				'jsonls',
