@@ -33,14 +33,8 @@ return {
 					})
 
 					local typescriptConfig = {
-						showUnused = true,
-						showDeprecated = true,
 						format = {
 							insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces = true
-						},
-						preferences = {
-							importModuleSpecifier = 'non-relative',
-							importModuleSpecifierEnding = 'js'
 						}
 					}
 
@@ -69,6 +63,10 @@ return {
 									location = "node_modules/@vue/typescript-plugin",
 									languages = { "typescript", "vue" },
 								}
+							},
+							preferences = {
+								importModuleSpecifier = 'non-relative',
+								importModuleSpecifierEnding = 'js'
 							}
 						},
 						settings = {
