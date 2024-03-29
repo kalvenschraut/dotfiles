@@ -16,6 +16,7 @@ return {
 			-- {{{ LSP Configurations
 			{
 				'neovim/nvim-lspconfig',
+				dependencies = { 'williamboman/mason.nvim', 'williamboman/mason-lspconfig.nvim' },
 				config = function()
 					local lspConfig = require('lspconfig')
 
@@ -53,6 +54,12 @@ return {
 							}
 						}
 					})
+					-- I tried the below but kept getting errors about package not found, so instead assuming the
+					-- default location of mason packages are used
+					-- local ts_plugin_path = mason_registry.get_package('vue-language-server'):get_install_path() ..
+					-- '/node_modules/@vue/language-server/node_modules/@vue/typescript-plugin'
+					local ts_plugin_path = vim.fn.stdpath("data") ..
+						'/mason/packages/vue-language-server/node_modules/@vue/language-server/node_modules/@vue/typescript-plugin'
 					lspConfig.tsserver.setup({
 						filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
 						root_dir = root_dir,
@@ -60,7 +67,7 @@ return {
 							plugins = {
 								{
 									name = "@vue/typescript-plugin",
-									location = "node_modules/@vue/typescript-plugin",
+									location = ts_plugin_path,
 									languages = { "typescript", "vue" },
 								}
 							},
