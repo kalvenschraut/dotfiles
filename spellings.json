@@ -45,6 +45,12 @@
     "tsup",
     "vite",
     "vitest",
-    "vuex"
+    "vuex",
+    "backoff",
+    "loclist",
+    "qflist",
+    "Quickfix",
+    "devicons",
+    "folke"
   ]
 }
