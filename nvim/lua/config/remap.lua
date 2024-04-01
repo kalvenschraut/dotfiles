@@ -47,7 +47,7 @@ vim.keymap.set('n', '<leader>h', '<cmd>BufferLineCyclePrev<CR>')
 vim.keymap.set('n', '<leader>x', '<cmd>bd<CR>')
 
 -- fold remap
-vim.keymap.set('n', '<leader>z', 'za')
+vim.keymap.set('n', '<enter>', 'za')
 vim.keymap.set('n', '<leader>/', '<cmd>nohlsearch<CR>');
 
 vim.g.diagnostics_showing = true
