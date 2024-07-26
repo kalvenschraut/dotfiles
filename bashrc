@@ -3,6 +3,7 @@
 [ -z "$PS1" ] && return
 
 shopt -s globstar
+export LIBGL_ALWAYS_INDIRECT=1
 
 case ${TERM} in
 xterm* | rxvt* | gnome* | konsole*)
@@ -44,6 +45,14 @@ gfbs() {
 	}
 	git checkout "$current_release_branch"
 	git flow bugfix start "$1" "$current_release_branch"
+}
+
+ssh-port-forward() {
+	test -z "$1" && {
+		echo "Please provide port to forward"
+		return
+	}
+	ssh -L "$1:localhost:$1" -N kalvens@kalvens.rtvision.com
 }
 
 source_dir ~/.bash.d/local/before
@@ -136,4 +145,11 @@ case ":$PATH:" in
 *":$PNPM_HOME:"*) ;;
 *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
-# pnpm end
+. "$HOME/.cargo/env"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH=$BUN_INSTALL/bin:$PATH
+
+# neovim nightly build
+export PATH="/opt/nvim-linux64/bin:$PATH"

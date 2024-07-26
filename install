@@ -57,6 +57,13 @@ install_home() {
 
 	read -p "add neovim? (Y/n) " ADD_FILE
 	if [[ $ADD_FILE != "n" ]]; then
+		read -p "install neovim? (y/N) " INSTALL_NIGHTLY
+		if [[ $INSTALL_NIGHTLY == "y" ]]; then
+			curl -L -o /tmp/nvim-linux64.tar.gz https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz
+			sudo rm -rf /opt/nvim
+			sudo tar -C /opt -xzf /tmp/nvim-linux64.tar.gz
+			rm /tmp/nvim-linux64.tar.gz
+		fi
 		if ! which node &>/dev/null; then
 			echo 'Node not found in path, it required to install neovim'
 		else
@@ -79,6 +86,13 @@ install_home() {
 
 			if ! which shfmt &>/dev/null; then
 				echo 'package shfmt not found, install using local OS package manager for bash formatting'
+			fi
+
+			if ! which cargo &>/dev/null; then
+				echo 'Cargo not found, skipping rust dependencys'
+			else
+				# add rust analyzer
+				rustup component add rust-analyzer
 			fi
 		fi
 	fi

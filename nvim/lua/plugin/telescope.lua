@@ -19,6 +19,7 @@ return {
 
 
 		local actions = require('telescope.actions');
+		telescope.load_extension("noice");
 		telescope.setup({
 			defaults = {
 				mappings = {

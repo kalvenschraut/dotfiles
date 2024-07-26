@@ -94,6 +94,7 @@ return {
 					'L3MON4D3/LuaSnip',
 					{
 						"zbirenbaum/copilot-cmp",
+						autostart = false,
 						dependencies = {
 							"zbirenbaum/copilot.lua",
 							config = function()
@@ -206,14 +207,14 @@ return {
 				'volar',
 				'tsserver',
 				'eslint',
-				'rust_analyzer',
 				'jsonls',
 				'lua_ls',
 				'bashls'
 			})
 			local allowedFormatters = {
 				lua_ls = true,
-				['null-ls'] = true
+				['null-ls'] = true,
+				['rust-analyzer'] = true
 			}
 			local lspFormatting = function(buffer, async)
 				vim.lsp.buf.format({
@@ -257,4 +258,20 @@ return {
 			lsp.setup()
 		end
 	},
+	{
+		'mrcjkb/rustaceanvim',
+		version = '^4', -- Recommended
+		ft = { 'rust' },
+		config = function()
+			vim.keymap.set('n', '<leader>r', function()
+				vim.cmd.RustLsp('runnables');
+			end)
+			vim.keymap.set('n', '<leader>rr', function()
+				vim.cmd.RustLsp({ 'runnables', bang = true });
+			end)
+			vim.keymap.set('n', '<leader>rd', function()
+				vim.cmd.RustLsp({ 'debuggables', bang = true });
+			end)
+		end
+	}
 }
