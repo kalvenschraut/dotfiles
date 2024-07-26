@@ -81,6 +81,9 @@ return {
 							javascript = typescriptConfig,
 						}
 					})
+					vim.keymap.set('n', '<leader>r', function()
+						vim.cmd('LspRestart tsserver');
+					end, {})
 				end
 			},
 			-- }}}
