@@ -81,6 +81,9 @@ return {
 							javascript = typescriptConfig,
 						}
 					})
+					vim.keymap.set('n', '<leader>r', function()
+						vim.cmd('LspRestart tsserver');
+					end, {})
 				end
 			},
 			-- }}}
@@ -161,7 +164,7 @@ return {
 			--- }}}
 			-- {{{ Formatters and Linters
 			{
-				'jose-elias-alvarez/null-ls.nvim',
+				'nvimtools/none-ls.nvim',
 				dependencies = {
 					{
 						'davidmh/cspell.nvim',

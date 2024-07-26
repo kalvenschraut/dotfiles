@@ -145,6 +145,8 @@ case ":$PATH:" in
 *":$PNPM_HOME:"*) ;;
 *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
+# pnpm end
+
 . "$HOME/.cargo/env"
 
 # bun
@@ -153,3 +155,6 @@ export PATH=$BUN_INSTALL/bin:$PATH
 
 # neovim nightly build
 export PATH="/opt/nvim-linux64/bin:$PATH"
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+. "$HOME/.cargo/env"
