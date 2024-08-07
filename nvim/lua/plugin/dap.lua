@@ -39,11 +39,6 @@ return {
 			vim.keymap.set('n', '<F12>', function() dap.step_out() end)
 			vim.keymap.set('n', '<leader>dl', function() dap.run_last() end)
 		end,
-		dependencies = {
-			"microsoft/vscode-js-debug",
-			lazy = true,
-			build = "npm ci --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out"
-		},
 	},
 	{
 		"rcarriga/nvim-dap-ui",

@@ -74,6 +74,12 @@ return {
 							preferences = {
 								importModuleSpecifier = 'non-relative',
 								importModuleSpecifierEnding = 'js'
+								-- includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+								-- includeInlayFunctionParameterTypeHints = true,
+								-- includeInlayVariableTypeHints = true,
+								-- includeInlayPropertyDeclarationTypeHints = true,
+								-- includeInlayFunctionLikeReturnTypeHints = true,
+								-- includeInlayEnumMemberValueHints = true,
 							}
 						},
 						settings = {
@@ -81,7 +87,7 @@ return {
 							javascript = typescriptConfig,
 						}
 					})
-					vim.keymap.set('n', '<leader>r', function()
+					vim.keymap.set('n', '<leader>R', function()
 						vim.cmd('LspRestart tsserver');
 					end, {})
 				end
@@ -257,24 +263,33 @@ return {
 						end,
 					})
 				end
+
+				-- vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 			end)
 			lsp.setup()
 		end
 	},
 	{
 		'mrcjkb/rustaceanvim',
-		version = '^4', -- Recommended
+		version = '^5', -- Recommended
 		ft = { 'rust' },
 		config = function()
-			vim.keymap.set('n', '<leader>r', function()
-				vim.cmd.RustLsp('runnables');
-			end)
-			vim.keymap.set('n', '<leader>rr', function()
-				vim.cmd.RustLsp({ 'runnables', bang = true });
-			end)
-			vim.keymap.set('n', '<leader>rd', function()
-				vim.cmd.RustLsp({ 'debuggables', bang = true });
-			end)
+			vim.g.rustaceanvim = {
+				server = {
+					on_attach = function(client, bufnr)
+						vim.keymap.set('n', '<leader>r', function()
+							vim.cmd.RustLsp('runnables');
+						end)
+						vim.keymap.set('n', '<leader>rr', function()
+							vim.cmd.RustLsp({ 'runnables', bang = true });
+						end)
+						vim.keymap.set('n', '<leader>rd', function()
+							vim.cmd.RustLsp({ 'debuggables', bang = true });
+						end)
+						vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+					end
+				},
+			}
 		end
 	}
 }
