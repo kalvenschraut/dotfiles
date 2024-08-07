@@ -60,6 +60,9 @@ install_home() {
 		if ! which node &>/dev/null; then
 			echo 'Node not found in path, it required to install neovim'
 		else
+			if [[ ! -d "$dest_dir/.config" ]]; then
+				mkdir "$dest_dir/.config"
+			fi
 			install_file nvim "$dest_dir/.nvim"
 			install_file nvim "$dest_dir/.config/nvim"
 
