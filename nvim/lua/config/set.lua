@@ -51,7 +51,7 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 
 -- disable mouse
-vim.opt.mouse = nil
+vim.opt.mouse = ''
 
 vim.cmd([[
 augroup templates
