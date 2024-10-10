@@ -214,7 +214,7 @@ return {
 			lsp.preset('recommended')
 			lsp.ensure_installed({
 				'volar',
-				'tsserver',
+				'ts_ls',
 				'eslint',
 				'jsonls',
 				'lua_ls',

@@ -3,6 +3,7 @@ return {
 	version = '0.1.x',
 	dependencies = {
 		'nvim-lua/plenary.nvim',
+		'nvim-telescope/telescope-ui-select.nvim',
 		'BurntSushi/ripgrep'
 	},
 	config = function()
@@ -20,6 +21,7 @@ return {
 
 		local actions = require('telescope.actions');
 		telescope.load_extension("noice");
+		telescope.load_extension("ui-select");
 		telescope.setup({
 			defaults = {
 				mappings = {
