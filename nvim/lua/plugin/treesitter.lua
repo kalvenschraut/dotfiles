@@ -4,7 +4,7 @@ return {
 		lazy = false,
 		priority = 1000,
 		build = ':TSUpdate',
-		version = '*',
+		version = 'v0.9.2',
 		config = function()
 			local treesitterConfigs = require('nvim-treesitter.configs');
 			treesitterConfigs.setup({
@@ -25,6 +25,7 @@ return {
 					"vimdoc",
 					"vue",
 					"yaml",
+					"dockerfile",
 					"markdown",
 					"markdown_inline"
 				},

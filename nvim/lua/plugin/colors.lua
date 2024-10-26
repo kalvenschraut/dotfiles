@@ -7,7 +7,10 @@ return {
 			local gruvbox = require('gruvbox');
 			gruvbox.setup({
 				contrast = 'hard',
-				inverse = true
+				inverse = true,
+				overrides = {
+					DiffText = { bg = gruvbox.palette.dark_aqua_hard },
+				}
 			});
 
 			vim.opt.background = 'dark'
