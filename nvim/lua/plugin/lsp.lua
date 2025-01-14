@@ -60,7 +60,7 @@ return {
 					-- '/node_modules/@vue/language-server/node_modules/@vue/typescript-plugin'
 					local ts_plugin_path = vim.fn.stdpath("data") ..
 						'/mason/packages/vue-language-server/node_modules/@vue/language-server/node_modules/@vue/typescript-plugin'
-					lspConfig.tsserver.setup({
+					lspConfig.ts_ls.setup({
 						filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
 						root_dir = root_dir,
 						init_options = {
@@ -130,15 +130,10 @@ return {
 						['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
 						['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
 						['<C-y>'] = cmp.mapping.confirm({ select = true }),
-						['<CR>'] = cmp.mapping.confirm({ select = false }),
+						['<CR>'] = cmp.mapping.confirm({ select = false }, { "s" }),
 						['<C-Space>'] = cmp.mapping.complete(),
-						['<Tab>'] = vim.schedule_wrap(function(fallback)
-							if cmp.visible() and has_words_before() then
-								cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-							else
-								fallback()
-							end
-						end),
+						['<Tab>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+						['<S-Tab>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
 					})
 
 					local lspkind = require('lspkind')
@@ -148,6 +143,9 @@ return {
 						},
 					})
 					vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
+
+					vim.g.copilot_no_tab_map = true;
+					vim.g.copilot_assume_mapped = true;
 
 
 					lsp.setup_nvim_cmp({
@@ -274,8 +272,19 @@ return {
 		version = '^5', -- Recommended
 		ft = { 'rust' },
 		config = function()
+			local target = nil;
+			if string.find(vim.loop.cwd(), 'windows') then
+				target = 'x86_64-pc-windows-gnu';
+			end
 			vim.g.rustaceanvim = {
 				server = {
+					settings = {
+						['rust-analyzer'] = {
+							cargo = {
+								target = target,
+							}
+						}
+					},
 					on_attach = function(client, bufnr)
 						vim.keymap.set('n', '<leader>r', function()
 							vim.cmd.RustLsp('runnables');

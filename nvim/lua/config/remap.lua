@@ -58,9 +58,11 @@ vim.keymap.set({ 'c', 'i', 'v', 'n' }, '<F8>', function()
 	local signColumnValue = (vim.wo.signcolumn == 'yes' and 'no') or 'yes';
 	if vim.g.diagnostics_showing then
 		vim.g.diagnostics_showing = false
+		vim.lsp.inlay_hint.enable(false);
 		vim.diagnostic.hide();
 	else
 		vim.g.diagnostics_showing = true
+		vim.lsp.inlay_hint.enable(nil);
 		vim.diagnostic.show()
 	end
 	return ':set invpaste invnumber invlist relativenumber! signcolumn=' .. signColumnValue .. '<CR>';
