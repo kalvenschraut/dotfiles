@@ -4,7 +4,7 @@ SESSION1='rtvision-app'
 SESSION2='php'
 BASE_REPO_DIR=~/monorepo
 OPEN_SOURCE_DIR=~/open-source
-EGRAM_HOME=/srv/egram/home/kalvens
+PHP_HOME=~/apache-php-apps
 
 # set up tmux
 tmux start-server
@@ -48,26 +48,19 @@ tmux select-window -t $SESSION1:api
 tmux select-window -t $SESSION1:ui
 
 # start other sessions
-tmux new-session -d -s $SESSION2 -n 'bidvault' -x "$(tput cols)" -y "$(tput lines)" -c $EGRAM_HOME/bidvault
-tmux split-window -h -l 75% -t bidvault -c $EGRAM_HOME/bidvault
-tmux split-window -v -l 30% -t bidvault.left -c $EGRAM_HOME/bidvault
-tmux select-pane -t bidvault.right
+tmux new-session -d -s $SESSION2 -n 'php-apps' -x "$(tput cols)" -y "$(tput lines)" -c $PHP_HOME/apps
+tmux split-window -h -l 75% -t php-apps -c $PHP_HOME/apps
+tmux split-window -v -l 30% -t php-apps.left -c $PHP_HOME/apps
+tmux select-pane -t php-apps.right
 
-tmux new-window -t $SESSION2:2 -n 'invoice' -c $EGRAM_HOME/invoice-2.x
-tmux split-window -h -l 75% -t invoice -c $EGRAM_HOME/invoice-2.x
-tmux split-window -v -l 30% -t invoice.left -c $EGRAM_HOME/invoice-2.x
-tmux select-pane -t invoice.right
+tmux new-window -t $SESSION2:2 -n 'docker' -c $PHP_HOME
 
-tmux new-window -t $SESSION2:3 -n 'db' -c $EGRAM_HOME
+tmux new-window -t $SESSION2:3 -n 'db' -c $PHP_HOME
 
 sleep 1
-tmux send-keys -t bidvault.top-left 'pnpm start'
-tmux send-keys -t bidvault.bottom-left 'tail error_log -f -c 30' Enter
+tmux send-keys -t docker 'make'
 
-tmux send-keys -t invoice.top-left 'pnpm start'
-tmux send-keys -t invoice.bottom-left 'tail  error_log -f -c 30' Enter
+tmux send-keys -t 'psql -U postgres -h localhost -p 5433'
 
-tmux send-keys -t db 'ssh-vm' Enter 'psql -U postgres' Enter
-
-tmux select-window -t $SESSION2:bidvault
+tmux select-window -t $SESSION2:php-apps
 tmux attach-session -t $SESSION1
