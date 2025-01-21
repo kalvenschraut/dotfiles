@@ -3,9 +3,12 @@ return {
 	event = "VeryLazy",
 	lazy = false,
 	opts = {
-		provider = "copilot"
+		provider = "copilot",
+		copilot = {
+			model = "claude-3.5-sonnet"
+		}
 	},
-	build = "make BUILD_FROM_SOURCE=true",
+	build = "RUSTC=/usr/bin/rustc make BUILD_FROM_SOURCE=true",
 	dependencies = {
 		"nvim-treesitter/nvim-treesitter",
 		"stevearc/dressing.nvim",
