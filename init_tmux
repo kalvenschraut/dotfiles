@@ -57,6 +57,9 @@ tmux new-window -t $SESSION2:2 -n 'docker' -c $PHP_HOME
 
 tmux new-window -t $SESSION2:3 -n 'db' -c $PHP_HOME
 
+tmux new-window -t $SESSION2:4 -n 'customer' -c
+tmux send-keys -t customer 'ssh -A ssh'
+
 sleep 1
 tmux send-keys -t docker 'make'
 
