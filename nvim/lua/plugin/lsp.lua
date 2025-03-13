@@ -286,6 +286,7 @@ return {
 		'mrcjkb/rustaceanvim',
 		version = '^5', -- Recommended
 		ft = { 'rust' },
+		lazy = false,
 		config = function()
 			local target = nil;
 			if string.find(vim.loop.cwd(), 'windows') then
@@ -301,6 +302,8 @@ return {
 						}
 					},
 					on_attach = function(client, bufnr)
+						vim.fn.setenv('RUSTFLAGS', "-C target-feature=-crt-static");
+
 						vim.keymap.set('n', '<leader>r', function()
 							vim.cmd.RustLsp('runnables');
 						end)
@@ -310,11 +313,14 @@ return {
 						vim.keymap.set('n', '<leader>rd', function()
 							vim.cmd.RustLsp({ 'debuggables', bang = true });
 						end)
+						vim.keymap.set('n', '<leader>rt', function()
+							vim.cmd.RustLsp('testables');
+						end)
 						vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 					end
 				},
 			}
-		end
+		end,
 	}
 	-- }}}
 }
