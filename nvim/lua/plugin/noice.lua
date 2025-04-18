@@ -29,6 +29,11 @@ return {
 		vim.keymap.set("n", "<leader>nh", function()
 			noice.cmd("telescope")
 		end)
+
+		local notify = require("notify")
+		notify.setup({
+			background_colour = "#808080",
+		})
 	end,
 	dependencies = {
 		"MunifTanjim/nui.nvim",
