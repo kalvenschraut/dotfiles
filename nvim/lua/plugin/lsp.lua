@@ -106,25 +106,35 @@ return {
 				callback = function(event)
 					local opts = { buffer = event.buf }
 
-					vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-					vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-					vim.keymap.set('n', 'gy', vim.lsp.buf.type_definition, opts)
+					vim.keymap.set('n', 'K', vim.lsp.buf.hover,
+						{ buffer = event.buf, desc = 'Show type information on currently hovered text' })
+					vim.keymap.set('n', 'gd', vim.lsp.buf.definition,
+						{ buffer = event.buf, desc = 'Go to definition on currently hovered text' })
+					vim.keymap.set('n', 'gy', vim.lsp.buf.type_definition,
+						{ buffer = event.buf, desc = 'Go to type definition on currently hovered text' })
 					vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
 					vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-					vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+					vim.keymap.set('n', 'gr', vim.lsp.buf.references,
+						{ buffer = event.buf, desc = 'Show what is using the currently hovered text' })
 					vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, opts)
 					vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, opts)
 					vim.keymap.set({ 'n', 'x' }, '<F3>', function()
 						vim.lsp.buf.format({ async = true })
 					end, opts)
-					vim.keymap.set('n', '<F4>', vim.lsp.buf.code_action, opts)
+					vim.keymap.set('n', '<F4>', vim.lsp.buf.code_action,
+						{ buffer = event.buf, desc = 'Show code actions for the currently hovered text' })
 					vim.keymap.set('n', '<leader>vws', vim.lsp.buf.workspace_symbol, opts)
-					vim.keymap.set('n', '<leader>vd', vim.diagnostic.open_float, opts)
-					vim.keymap.set('n', '[d', vim.diagnostic.goto_next, opts)
-					vim.keymap.set('n', ']d', vim.diagnostic.goto_prev, opts)
-					vim.keymap.set('n', '<leader>vca', vim.lsp.buf.code_action, opts)
+					vim.keymap.set('n', '<leader>vd', vim.diagnostic.open_float,
+						{ buffer = event.buf, desc = 'Show diagnostics for the currently hovered text' })
+					vim.keymap.set('n', '[d', vim.diagnostic.goto_next,
+						{ buffer = event.buf, desc = 'Go to next diagnostic' })
+					vim.keymap.set('n', ']d', vim.diagnostic.goto_prev,
+						{ buffer = event.buf, desc = 'Go to previous diagnostic' })
+					vim.keymap.set('n', '<leader>vca', vim.lsp.buf.code_action,
+						{ buffer = event.buf, desc = 'Show code actions for the currently hovered text' })
 					vim.keymap.set('n', '<leader>vrr', vim.lsp.buf.references, opts)
-					vim.keymap.set('n', '<leader>lf', '<cmd>EslintFixAll<CR>')
+					vim.keymap.set('n', '<leader>lf', '<cmd>EslintFixAll<CR>',
+						{ buffer = event.buf, desc = 'Run eslint fix on current file' })
 					-- vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 
 					-- setup formatting cmds
@@ -161,7 +171,8 @@ return {
 						})
 					end
 
-					vim.keymap.set('n', '<leader>f', lspFormatting, opts)
+					vim.keymap.set('n', '<leader>f', lspFormatting,
+						{ buffer = event.buf, desc = 'Format current buffer' })
 					if client.supports_method("textDocument/formatting") then
 						buffer_autoformat(event.buf);
 					end
