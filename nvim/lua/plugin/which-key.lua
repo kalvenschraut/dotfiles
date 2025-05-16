@@ -1,6 +1,9 @@
 return {
 	"folke/which-key.nvim",
 	event = "VeryLazy",
+	config = {
+		preset = "modern"
+	},
 	keys = {
 		{
 			"<leader>?",
