@@ -32,7 +32,7 @@ return {
 
 		local notify = require("notify")
 		notify.setup({
-			background_colour = "#808080",
+			background_colour = "#000000",
 		})
 	end,
 	dependencies = {
