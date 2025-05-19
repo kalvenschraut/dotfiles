@@ -38,7 +38,7 @@ gfbs() {
 		return
 	}
 	git fetch -p
-	local current_release_branch="$(git branch -a | grep -E 'remotes.*release' | sed 's%remotes/origin/%%' | sort | tail -n1 | xargs)"
+	local current_release_branch="$(git branch -a | grep -E 'remotes.*origin.*release' | sed 's%remotes/origin/%%' | sort | tail -n1 | xargs)"
 	test -z "$current_release_branch" && {
 		echo "Could not find the current release branch"
 		return
