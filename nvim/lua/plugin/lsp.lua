@@ -274,6 +274,7 @@ return {
 			nullLs.setup({
 				sources = {
 					nullLs.builtins.formatting.prettierd,
+					nullLs.builtins.formatting.terraform_fmt,
 					nullLs.builtins.formatting.shfmt.with({
 						filetypes = { 'sh', 'bash' }
 					}),
