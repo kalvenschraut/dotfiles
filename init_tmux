@@ -17,34 +17,31 @@ tmux split-window -v -l 40% -c $BASE_REPO_DIR
 tmux select-pane -t ui.right
 
 tmux new-window -t $SESSION1:2 -n 'docker' -c $BASE_REPO_DIR
-tmux new-window -t $SESSION1:3 -n 'api' -c $BASE_REPO_DIR/apps/app-api
-tmux new-window -t $SESSION1:4 -n 'packages' -c $BASE_REPO_DIR/packages
 
-tmux new-window -t $SESSION1:5 -n 'add-in' -c $BASE_REPO_DIR/apps/add-in-word-excel
+tmux new-window -t $SESSION1:3 -n 'add-in' -c $BASE_REPO_DIR/apps/add-in-word-excel
 tmux split-window -h -l 75% -t add-in -c $BASE_REPO_DIR/apps/add-in-word-excel
 tmux select-pane -t add-in.right
 
-tmux new-window -t $SESSION1:6 -n 'store' -c $BASE_REPO_DIR/apps/app-store
-tmux new-window -t $SESSION1:7 -n 'aws-terraform' -c $BASE_REPO_DIR
-tmux new-window -t $SESSION1:8 -n 'db' -c $BASE_REPO_DIR
+tmux new-window -t $SESSION1:4 -n 'aws-infrastructure' -c $BASE_REPO_DIR
+tmux new-window -t $SESSION1:5 -n 'db' -c $BASE_REPO_DIR
 
-tmux new-window -t $SESSION1:9 -n 'open-source' -c $OPEN_SOURCE_DIR
+tmux new-window -t $SESSION1:6 -n 'open-source' -c $OPEN_SOURCE_DIR
 tmux split-window -h -l 70% -t open-source -c $OPEN_SOURCE_DIR
 tmux split-window -v -l 5% -t open-source.left -c $OPEN_SOURCE_DIR
 tmux select-pane -t open-source.right
 
 # Need to sleep to make sure shells are active
 sleep 1
-tmux send-keys -t ui.top-left 'sleep 30' Enter 'pnpm dev --filter=@rtvision/app-ui' Enter
-tmux send-keys -t ui.bottom-left 'pnpm dev --filter=@rtvision/app-ui^...' Enter
+tmux send-keys -t ui.top-left 'pnpm dev --filter=@rtvision/app-ui'
+tmux send-keys -t ui.bottom-left 'pnpm dev --filter=@rtvision/app-ui^...'
 tmux send-keys -t docker 'make' Enter
 tmux send-keys -t add-in.left 'pnpm start' Enter
-tmux send-keys -t aws-terraform 'ssh -A ssh' Enter 'cd aws-terraform' Enter
-tmux send-keys -t db 'sleep 10' Enter 'psql -U postgres -h localhost rtvision' Enter
+tmux send-keys -t aws-infrastructure "ssh bastion -t 'cd aws-infrastructure; bash --login'" Enter
+tmux send-keys -t db 'sleep 11' Enter 'psql -U postgres -h localhost rtvision' Enter
 tmux send-keys -t open-source.bottom-left 'ssh -L 3333:github.com:22 ssh -N' # Do not hit enter for this just want it there when I need to push/pull to/from github
 
 # go to 3rd window so it is marked as the previous window and accessed via the back key
-tmux select-window -t $SESSION1:api
+tmux select-window -t $SESSION1:docker
 tmux select-window -t $SESSION1:ui
 
 # start other sessions
@@ -57,13 +54,14 @@ tmux new-window -t $SESSION2:2 -n 'docker' -c $PHP_HOME
 
 tmux new-window -t $SESSION2:3 -n 'db' -c $PHP_HOME
 
-tmux new-window -t $SESSION2:4 -n 'customer' -c
-tmux send-keys -t customer 'ssh -A ssh'
+tmux new-window -t $SESSION2:4 -n 'customer' -c $PHP_HOME
+tmux send-keys -t customer 'ssh bastion'
 
 sleep 1
-tmux send-keys -t docker 'make'
+tmux send-keys -t $SESSION2:docker 'make'
 
-tmux send-keys -t 'psql -U postgres -h localhost -p 5433'
+tmux send-keys -t $SESSION2:db 'psql -U postgres -h localhost -p 5433'
 
 tmux select-window -t $SESSION2:php-apps
+
 tmux attach-session -t $SESSION1
