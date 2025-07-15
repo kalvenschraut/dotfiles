@@ -4,8 +4,10 @@ return {
 	lazy = false,
 	opts = {
 		provider = "copilot",
-		copilot = {
-			model = "claude-3.7-sonnet"
+		providers = {
+			copilot = {
+				model = "claude-sonnet-4"
+			}
 		}
 	},
 	build = "RUSTC=/usr/bin/rustc make BUILD_FROM_SOURCE=true",

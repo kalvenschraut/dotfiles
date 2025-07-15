@@ -1,5 +1,6 @@
 vim.opt.guicursor = ''
 vim.opt.nu = true
+vim.opt.backupcopy = 'yes'
 
 -- What does the line number shifting
 vim.opt.relativenumber = true
@@ -53,11 +54,12 @@ vim.opt.splitright = true
 -- disable mouse
 vim.opt.mouse = ''
 
-vim.cmd([[
+--[[vim.cmd([[
 augroup templates
     autocmd BufNewFile *.vue 0r ~/.nvim/templates/sfc.vue
 augroup END
-]])
+\]\])
+]] --
 
 vim.api.nvim_create_autocmd("BufReadPost", {
 	pattern = { "*" },
