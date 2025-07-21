@@ -30,7 +30,7 @@ local vueLanguageServerPath = vim.fn.expand('$MASON/packages')
 	.. '/node_modules/@vue/language-server';
 return {
 	on_init = function(_client, bufnr)
-		vim.lsp.inlay_hint.enable(true, { bufnr })
+		-- vim.lsp.inlay_hint.enable(true, { bufnr })
 		vim.keymap.set('n', '<leader>R', function()
 			vim.cmd('LspRestart tsserver');
 		end, {})
