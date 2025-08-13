@@ -32,13 +32,13 @@ return {
 	on_init = function(_client, bufnr)
 		-- vim.lsp.inlay_hint.enable(true, { bufnr })
 		vim.keymap.set('n', '<leader>R', function()
-			vim.cmd('LspRestart tsserver');
 		end, {})
 	end,
 	settings = {
 		typescript = typescriptConfig,
 		javascript = typescriptConfig,
 		vtsls = {
+			autoUseWorkspaceTsdk = true,
 			tsserver = {
 				globalPlugins = {
 					{
@@ -46,6 +46,7 @@ return {
 						location = vueLanguageServerPath,
 						languages = { 'vue' },
 						configNamespace = 'typescript',
+						enableForWorkspaceTypeScriptVersions = true
 					}
 				},
 			},
