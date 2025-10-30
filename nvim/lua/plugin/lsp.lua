@@ -130,7 +130,8 @@ return {
 					'vtsls',
 					'jsonls',
 					'lua_ls',
-					'bashls'
+					'bashls',
+					'phpactor'
 				}
 			})
 
@@ -231,7 +232,7 @@ return {
 				end,
 			})
 
-			vim.lsp.enable({ 'vue_ls', 'vtsls', 'lua_ls', 'bashls', 'jsonls' });
+			vim.lsp.enable({ 'vue_ls', 'vtsls', 'lua_ls', 'bashls', 'jsonls', 'phpactor' });
 		end
 	},
 	-- }}}

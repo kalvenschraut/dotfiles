@@ -55,6 +55,11 @@ install_home() {
 		install_file launch_editor "$dest_dir/launch_editor"
 	fi
 
+	read -p "add opencode config? (Y/n) " ADD_FILE
+	if [[ $ADD_FILE != "n" ]]; then
+		install_file opencode.jsonc "$dest_dir/.config/opencode/opencode.jsonc"
+	fi
+
 	read -p "add neovim? (Y/n) " ADD_FILE
 	if [[ $ADD_FILE != "n" ]]; then
 		read -p "install neovim? (y/N) " INSTALL_NIGHTLY
