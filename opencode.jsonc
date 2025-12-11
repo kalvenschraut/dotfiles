@@ -1,6 +1,16 @@
 {
 	"$schema": "https://opencode.ai/config.json",
 	// Theme configuration
-	"theme": "opencode",
-	"autoupdate": true
+	"theme": "kanagawa",
+	"autoupdate": true,
+	"permission": {
+		"bash": {
+			"git checkout": "ask",
+			"git push": "ask",
+			"git reset": "ask",
+			"git commit": "ask",
+			"git stash": "ask",
+			"git restore": "ask"
+		}
+	}
 }
