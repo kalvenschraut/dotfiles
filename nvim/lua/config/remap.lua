@@ -1,4 +1,4 @@
-vim.keymap.set('n', '<leader>pv', vim.cmd.Ex, { desc = "Show file tree starting from current file" })
+vim.keymap.set('n', '<leader>fv', '<CMD>Oil<CR>', { desc = "Show file tree starting from current file" })
 -- a cool remap, allows using shift j and k
 -- to move hightlighted text in visual mode
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")

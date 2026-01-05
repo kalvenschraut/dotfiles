@@ -19,7 +19,8 @@ return {
 					'jsonls',
 					'lua_ls',
 					'bashls',
-					'phpactor'
+					'phpactor',
+					'oxlint'
 				}
 			})
 
@@ -107,13 +108,17 @@ return {
 
 					vim.keymap.set('n', '<leader>f', lspFormatting,
 						{ buffer = event.buf, desc = 'Format current buffer' })
-					if client.supports_method("textDocument/formatting") then
+					if client:supports_method("textDocument/formatting") then
 						buffer_autoformat(event.buf);
 					end
+
+					-- if client:supports_method(vim.lsp.protocol.Methods.textDocument_inlineCompletion) then
+					--  vim.lsp.inline_completion.enable(true);
+					-- end
 				end,
 			})
 
-			vim.lsp.enable({ 'vue_ls', 'vtsls', 'lua_ls', 'bashls', 'jsonls', 'phpactor' });
+			vim.lsp.enable({ 'vue_ls', 'vtsls', 'lua_ls', 'bashls', 'jsonls', 'phpactor', 'copilot', 'oxlint' });
 		end
 	},
 	-- }}}

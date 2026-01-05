@@ -30,8 +30,25 @@ return {
 		-- See :h blink-cmp-config-keymap for defining your own keymap
 		keymap = {
 			preset = 'enter',
-			['<Tab>'] = { 'select_next', 'fallback' },
+			["<Tab>"] = {
+				"select_next",
+				function() -- sidekick next edit suggestion
+					return require("sidekick").nes_jump_or_apply()
+				end,
+				-- function() -- if you are using Neovim's native inline completions
+				-- return vim.lsp.inline_completion.get()
+				-- end,
+				"fallback",
+			},
 			['<S-Tab>'] = { 'select_prev', 'fallback' },
+			["<C-s>"] = {
+				"snippet_forward",
+				"fallback",
+			},
+			["<S-C-s>"] = {
+				"snippet_backward",
+				"fallback",
+			},
 		},
 
 		signature = { enabled = true },
@@ -44,6 +61,9 @@ return {
 
 		-- (Default) Only show the documentation popup when manually triggered
 		completion = {
+			accept = {
+				resolve_timeout_ms = 1000
+			},
 			documentation = { auto_show = true, auto_show_delay_ms = 500 },
 			list = {
 				selection = {

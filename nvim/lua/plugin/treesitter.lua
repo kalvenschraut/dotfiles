@@ -20,6 +20,7 @@ return {
 					"rust",
 					"php",
 					"scss",
+					"go",
 					"typescript",
 					"vim",
 					"vimdoc",
