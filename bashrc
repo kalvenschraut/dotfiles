@@ -159,8 +159,8 @@ alias nvim-server="nvim --listen ~/.cache/nvim/server.pipe"
 # pnpm
 export PNPM_HOME="/home/kalvens/.local/share/pnpm"
 case ":$PATH:" in
-*":$PNPM_HOME:"*) ;;
-*) export PATH="$PNPM_HOME:$PATH" ;;
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
 
@@ -179,3 +179,5 @@ export PATH="$HOME/go/bin:$PATH"
 
 # opencode
 export PATH=/home/kalvens/.opencode/bin:$PATH
+export EDITOR=nvim
+export VISUAL=nvim

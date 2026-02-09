@@ -12,5 +12,36 @@
 			"git stash": "ask",
 			"git restore": "ask"
 		}
+	},
+	"keybinds": {
+		// --- Free ctrl+u/d for vim-style half-page scrolling ---
+		"input_delete_to_line_start": "none", // was ctrl+u
+		"input_delete": "delete,shift+delete", // was ctrl+d
+
+		// --- Vim-style message scrolling ---
+		"messages_half_page_up": "ctrl+alt+u,ctrl+u",
+		"messages_half_page_down": "ctrl+alt+d,ctrl+d",
+		"messages_first": "ctrl+g,home",
+		"messages_last": "ctrl+shift+g,end",
+
+		// --- Session navigation: leader + brackets ---
+		"session_child_cycle": "<leader>right,<leader>]",
+		"session_child_cycle_reverse": "<leader>left,<leader>[",
+		"session_parent": "<leader>up"
+	},
+	"mcp": {
+		"vuetify-mcp": {
+			"type": "remote",
+			"url": "https://mcp.vuetifyjs.com/mcp",
+			"enabled": true,
+			"headers": {
+				"Authorization": "Bearer <TOKEN>"
+			}
+		},
+		"playwright": {
+			"type": "local",
+			"command": ["pnpx", "@playwright/mcp@latest"],
+			"enabled": true
+		}
 	}
 }
