@@ -42,6 +42,16 @@
 			"type": "local",
 			"command": ["pnpx", "@playwright/mcp@latest"],
 			"enabled": true
+		},
+		"sentry": {
+			"type": "remote",
+			"url": "https://mcp.sentry.dev/mcp",
+			"enabled": true
+		},
+		"jira": {
+			"type": "remote",
+			"url": "https://mcp.atlassian.com/v1/mcp",
+			"enabled": true
 		}
 	}
 }
