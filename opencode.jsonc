@@ -22,7 +22,7 @@
 		"messages_half_page_up": "ctrl+alt+u,ctrl+u",
 		"messages_half_page_down": "ctrl+alt+d,ctrl+d",
 		"messages_first": "ctrl+g,home",
-		"messages_last": "ctrl+shift+g,end",
+		"messages_last": "alt+g,end",
 
 		// --- Session navigation: leader + brackets ---
 		"session_child_cycle": "<leader>right,<leader>]",
@@ -35,7 +35,7 @@
 			"url": "https://mcp.vuetifyjs.com/mcp",
 			"enabled": true,
 			"headers": {
-				"Authorization": "Bearer <TOKEN>"
+				"Authorization": "Bearer 2OdcrWCqPZ4bXcoNE6XumUVcSXj5Uh4_se0jHkB9GqA"
 			}
 		},
 		"playwright": {

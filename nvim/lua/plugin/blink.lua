@@ -1,3 +1,68 @@
+vim.g.blink_debug_auto_import = 1
+
+local function completion_data(item)
+	if type(item) ~= "table" then
+		return nil
+	end
+	if type(item.data) ~= "table" then
+		return nil
+	end
+	if type(item.data.original) == "table" and type(item.data.original.data) == "table" then
+		return item.data.original.data
+	end
+	return item.data
+end
+
+local function is_auto_import_item(item)
+	local data = completion_data(item)
+	if type(data) ~= "table" then
+		return false
+	end
+	return data.__vue__autoImportSuggestions ~= nil
+		or data.__vue__tsgoAutoImportHint ~= nil
+		or data.__vue__tsgoAutoImportVirtual ~= nil
+		or data.__vue__autoImport ~= nil
+		or data.__vue__componentAutoImport ~= nil
+end
+
+local function item_source_description(item)
+	if type(item.labelDetails) == "table" and type(item.labelDetails.description) == "string" then
+		local desc = vim.trim(item.labelDetails.description)
+		if desc ~= "" then
+			return desc
+		end
+	end
+	local data = completion_data(item)
+	if type(data) ~= "table" then
+		return ""
+	end
+	return data.__vue__autoImportSuggestions and data.__vue__autoImportSuggestions.source
+		or data.__vue__tsgoAutoImportHint and data.__vue__tsgoAutoImportHint.source
+		or data.__vue__tsgoAutoImportVirtual and data.__vue__tsgoAutoImportVirtual.source
+		or ""
+end
+
+local function dedupe_lsp_items(items)
+	local deduped = {}
+	local by_key = {}
+	for _, item in ipairs(items) do
+		local label = string.lower(vim.trim(tostring(item.label or "")))
+		local source = string.lower(vim.trim(item_source_description(item)))
+		local key = source ~= "" and (label .. "|" .. source) or (label .. "|<no-source>")
+		local existing_index = by_key[key]
+		if existing_index == nil then
+			table.insert(deduped, item)
+			by_key[key] = #deduped
+		else
+			local existing = deduped[existing_index]
+			if (not is_auto_import_item(existing)) and is_auto_import_item(item) then
+				deduped[existing_index] = item
+			end
+		end
+	end
+	return deduped
+end
+
 return {
 	'saghen/blink.cmp',
 	-- optional: provides snippets for the snippet source
@@ -62,7 +127,7 @@ return {
 		-- (Default) Only show the documentation popup when manually triggered
 		completion = {
 			accept = {
-				resolve_timeout_ms = 1000
+				resolve_timeout_ms = 5000
 			},
 			documentation = { auto_show = true, auto_show_delay_ms = 500 },
 			list = {
@@ -73,9 +138,7 @@ return {
 			},
 			menu = {
 				draw = {
-					-- We don't need label_description now because label and label_description are already
-					-- combined together in label by colorful-menu.nvim.
-					columns = { { "kind_icon" }, { "label", gap = 1 } },
+					columns = { { "kind_icon" }, { "label", gap = 1 }, { "label_description" } },
 					components = {
 						label = {
 							text = function(ctx)
@@ -93,9 +156,20 @@ return {
 
 		-- Default list of enabled providers defined so that you can extend it
 		-- elsewhere in your config, without redefining it, due to `opts_extend`
-		sources = {
-			default = { 'lsp', 'path', 'snippets', 'buffer', 'copilot' },
-			providers = {
+			sources = {
+				default = { 'lsp', 'path', 'snippets', 'buffer', 'copilot' },
+				providers = {
+					lsp = {
+						name = "LSP",
+						score_offset = 20,
+						transform_items = function(_, items)
+							return dedupe_lsp_items(items)
+						end,
+					},
+				buffer = {
+					name = "Buffer",
+					score_offset = -10,
+				},
 				copilot = {
 					name = "copilot",
 					module = "blink-copilot",

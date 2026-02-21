@@ -1,0 +1,3 @@
+tmux-256color-nomouse|tmux-256color without mouse tracking,
+	kmous@,
+	use=tmux-256color,

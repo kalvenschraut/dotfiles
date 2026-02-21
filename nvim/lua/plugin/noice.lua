@@ -12,7 +12,7 @@ return {
 						find = "Request textDocument/inlayHint failed",
 					},
 					opts = { skip = true },
-				},
+				}
 			},
 			lsp = {
 				-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
@@ -31,6 +31,13 @@ return {
 				inc_rename = false, -- enables an input dialog for inc-rename.nvim
 				lsp_doc_border = false, -- add a border to hover docs and signature help
 			},
+			views = {
+				mini = {
+					win_options = {
+						winblend = 98,
+					},
+				},
+			},
 		})
 		vim.keymap.set("n", "<leader>nl", function()
 			noice.cmd("last")
@@ -39,14 +46,20 @@ return {
 		vim.keymap.set("n", "<leader>nh", function()
 			noice.cmd("telescope")
 		end)
-
-		local notify = require("notify")
-		notify.setup({
-			background_colour = "#000000",
-		})
 	end,
 	dependencies = {
 		"MunifTanjim/nui.nvim",
-		"rcarriga/nvim-notify",
+		{
+			"rcarriga/nvim-notify",
+			opts = function()
+				local normal = vim.api.nvim_get_hl(0, { name = "Normal", link = false })
+				local bg = normal and normal.bg
+				-- nvim-notify requires an RGB hex value (or a hl group with bg) for transparency blending.
+				local background = type(bg) == "number" and string.format("#%06x", bg) or "#000000"
+				return {
+					background_colour = background,
+				}
+			end,
+		},
 	}
 }

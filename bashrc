@@ -5,16 +5,18 @@
 shopt -s globstar
 export LIBGL_ALWAYS_INDIRECT=1
 
-case ${TERM} in
-xterm* | rxvt* | gnome* | konsole*)
-	export TERM=xterm-256color
-	export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\007"'
-	;;
-screen*)
-	export TERM=screen-256color
-	export PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\033\\"'
-	;;
-esac
+if [ -z "$TMUX" ]; then
+	case ${TERM} in
+	xterm* | rxvt* | gnome* | konsole*)
+		export TERM=xterm-256color
+		export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\007"'
+		;;
+	screen*)
+		export TERM=screen-256color
+		export PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\033\\"'
+		;;
+	esac
+fi
 
 parse_git_branch() {
 	git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ on \1/'
@@ -82,7 +84,7 @@ alias ssh-ws='ssh kalvens@192.168.1.72'
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-xterm-color | *-256color) color_prompt=yes ;;
+xterm-color | *-256color | *-256color-*) color_prompt=yes ;;
 esac
 
 if [ -n "$force_color_prompt" ]; then
