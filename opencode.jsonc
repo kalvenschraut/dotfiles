@@ -35,7 +35,7 @@
 			"url": "https://mcp.vuetifyjs.com/mcp",
 			"enabled": true,
 			"headers": {
-				"Authorization": "Bearer 2OdcrWCqPZ4bXcoNE6XumUVcSXj5Uh4_se0jHkB9GqA"
+				"Authorization": "Bearer <token>"
 			}
 		},
 		"playwright": {
