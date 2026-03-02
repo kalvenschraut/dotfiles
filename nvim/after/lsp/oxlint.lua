@@ -1,5 +1,5 @@
 return {
-	cmd = { 'oxlint', '--lsp' },
+	cmd = { 'oxlint', '--lsp', '-A', 'no-console' },
 	filetypes = {
 		'javascript',
 		'javascriptreact',
