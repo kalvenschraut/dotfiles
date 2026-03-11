@@ -1,17 +1,12 @@
 return {
-	cmd = { 'oxlint', '--lsp', '-A', 'no-console' },
-	filetypes = {
-		'javascript',
-		'javascriptreact',
-		'javascript.jsx',
-		'typescript',
-		'typescriptreact',
-		'typescript.tsx',
-		'vue',
-	},
-	settings = {
-		oxc_language_server = {
-			typeAware = true
-		},
-	}
+	root_dir = function(bufnr, on_dir)
+		local root = vim.fs.root(bufnr,
+			{ 'oxlint.config.ts', '.oxlintrc.json', '.oxlintrc.jsonc', 'package.json', '.git' })
+		on_dir(root or vim.fn.getcwd())
+	end,
+	cmd = function(dispatchers, config)
+		return vim.lsp.rpc.start({ 'pnpm', 'exec', 'oxlint', '--lsp' }, dispatchers, {
+			cwd = config.root_dir
+		})
+	end
 }
