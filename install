@@ -5,7 +5,7 @@ post_install_actions() {
 
 install_home() {
 	local dest_dir="$HOME"
-	local excluded="$(basename $0) README.md install update i3-config gtk-settings.ini i3 init_tmux launch_editor vim vimrc nvim psqlrc"
+	local excluded="$(basename $0) README.md install update i3-config gtk-settings.ini i3 init_tmux launch_editor vim vimrc nvim psqlrc tui.json"
 
 	local file
 	for file in *; do
@@ -57,7 +57,9 @@ install_home() {
 
 	read -p "add opencode config? (Y/n) " ADD_FILE
 	if [[ $ADD_FILE != "n" ]]; then
+		mkdir -p "$dest_dir/.config/opencode"
 		install_file opencode.jsonc "$dest_dir/.config/opencode/opencode.jsonc"
+		install_file tui.json "$dest_dir/.config/opencode/tui.json"
 	fi
 
 	read -p "add neovim? (Y/n) " ADD_FILE
