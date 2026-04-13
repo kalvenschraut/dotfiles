@@ -157,13 +157,12 @@ alias ipv6-randip='dd if=/dev/urandom bs=8 count=1 2>/dev/null | od -x -A n | se
 bind -f ~/.inputrc
 export LAUNCH_EDITOR="$HOME/launch_editor"
 alias nvim-server="nvim --listen ~/.cache/nvim/server.pipe"
-export NVIM_LISTEN_ADDRESS="/tmp/nvim.sock"
 
 # pnpm
 export PNPM_HOME="/home/kalvens/.local/share/pnpm"
 case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
+*":$PNPM_HOME:"*) ;;
+*) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
 

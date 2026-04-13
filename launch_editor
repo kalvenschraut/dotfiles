@@ -2,6 +2,33 @@
 FILE=$1
 LINE=${2:-1}
 
-# Try to connect to a running nvim instance via socket
-NVIM_SOCKET="/tmp/nvim.sock"
+find_nvim_socket() {
+	local socket
+	local -a candidates=()
+
+	shopt -s nullglob
+	[[ -n ${NVIM:-} ]] && candidates+=("$NVIM")
+	[[ -n ${NVIM_LISTEN_ADDRESS:-} ]] && candidates+=("$NVIM_LISTEN_ADDRESS")
+	[[ -d "$HOME/.cache/nvim" ]] && candidates+=("$HOME/.cache/nvim/"*)
+	[[ -n ${XDG_RUNTIME_DIR:-} && -d $XDG_RUNTIME_DIR ]] && candidates+=("$XDG_RUNTIME_DIR"/nvim*)
+	candidates+=(/tmp/nvim* /tmp/*/nvim*)
+	shopt -u nullglob
+
+	for socket in "${candidates[@]}"; do
+		[[ -S $socket ]] || continue
+
+		if nvim --server "$socket" --remote-expr '1' >/dev/null 2>&1; then
+			printf '%s\n' "$socket"
+			return 0
+		fi
+	done
+
+	return 1
+}
+
+NVIM_SOCKET=$(find_nvim_socket) || {
+	printf 'No running nvim socket found\n' >&2
+	exit 1
+}
+
 nvim --server "$NVIM_SOCKET" --remote-send "<C-\\><C-n>:e +$LINE $FILE<CR>"
