@@ -1,29 +1,60 @@
 #!/bin/bash
+set -x
 FILE=$1
 LINE=${2:-1}
 
 find_nvim_socket() {
+	local path
+	local dir
 	local socket
-	local -a candidates=()
+	local socket_birth_time
+	local oldest_socket=""
+	local oldest_birth_time=""
 
 	shopt -s nullglob
-	[[ -n ${NVIM:-} ]] && candidates+=("$NVIM")
-	[[ -n ${NVIM_LISTEN_ADDRESS:-} ]] && candidates+=("$NVIM_LISTEN_ADDRESS")
-	[[ -d "$HOME/.cache/nvim" ]] && candidates+=("$HOME/.cache/nvim/"*)
-	[[ -n ${XDG_RUNTIME_DIR:-} && -d $XDG_RUNTIME_DIR ]] && candidates+=("$XDG_RUNTIME_DIR"/nvim*)
-	candidates+=(/tmp/nvim* /tmp/*/nvim*)
-	shopt -u nullglob
+	for path in /tmp/nvim*; do
+		if [[ -S $path ]]; then
+			socket=$path
+		elif [[ -d $path ]]; then
+			for dir in "$path"/*; do
+				[[ -d $dir ]] || continue
 
-	for socket in "${candidates[@]}"; do
-		[[ -S $socket ]] || continue
+				for socket in "$dir"/*; do
+					[[ -S $socket ]] || continue
+
+					if nvim --server "$socket" --remote-expr '1' >/dev/null 2>&1; then
+						socket_birth_time=$(stat -c '%W' "$socket") || continue
+						[[ $socket_birth_time -gt 0 ]] || continue
+
+						if [[ -z $oldest_birth_time || $socket_birth_time -lt $oldest_birth_time ]]; then
+							oldest_birth_time=$socket_birth_time
+							oldest_socket=$socket
+						fi
+					fi
+				done
+			done
+
+			continue
+		else
+			continue
+		fi
 
 		if nvim --server "$socket" --remote-expr '1' >/dev/null 2>&1; then
-			printf '%s\n' "$socket"
-			return 0
+			socket_birth_time=$(stat -c '%W' "$socket") || continue
+			[[ $socket_birth_time -gt 0 ]] || continue
+
+			if [[ -z $oldest_birth_time || $socket_birth_time -lt $oldest_birth_time ]]; then
+				oldest_birth_time=$socket_birth_time
+				oldest_socket=$socket
+			fi
 		fi
 	done
+	shopt -u nullglob
 
-	return 1
+	[[ -n $oldest_socket ]] || return 1
+	printf '%s\n' "$oldest_socket"
+
+	return 0
 }
 
 NVIM_SOCKET=$(find_nvim_socket) || {
