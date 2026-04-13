@@ -1,5 +1,4 @@
 #!/bin/bash
-set -x
 FILE=$1
 LINE=${2:-1}
 
