@@ -33,7 +33,7 @@ tmux select-pane -t open-source.right
 # Need to sleep to make sure shells are active
 sleep 1
 tmux send-keys -t ui.top-left 'pnpm dev --filter=@rtvision/app-ui'
-tmux send-keys -t ui.bottom-left 'pnpm dev --filter=@rtvision/app-ui^...'
+tmux send-keys -t ui.bottom-left 'pnpm generate-indexes-dev --filter=@rtvision/app-ui^...'
 tmux send-keys -t docker 'make' Enter
 tmux send-keys -t add-in.left 'pnpm start' Enter
 tmux send-keys -t aws-infrastructure "ssh bastion -t 'cd aws-infrastructure; bash --login'" Enter
