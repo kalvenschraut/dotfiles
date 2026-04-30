@@ -67,7 +67,7 @@ ssh-port-forward() {
 		echo "Please provide port to forward"
 		return
 	}
-	ssh -L "$1:localhost:$1" -N kalvens@kalvens.rtvision.com
+	ssh -L "$1:localhost:$1" -N "$USER@$USER.rtvision.com"
 }
 
 source_dir ~/.bash.d/local/before
@@ -79,8 +79,7 @@ if [[ -f ~/.secrets ]]; then
 fi
 
 # ssh aliases
-alias ssh-vm='ssh -A kalvens@2620:9d:4000:72:136c:fa8:54b:9be1'
-alias ssh-ws='ssh kalvens@192.168.1.72'
+alias ssh-ws="ssh $USER.rtvsion.com"
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
@@ -159,7 +158,7 @@ export LAUNCH_EDITOR="$HOME/launch_editor"
 alias nvim-server="nvim --listen ~/.cache/nvim/server.pipe"
 
 # pnpm
-export PNPM_HOME="/home/kalvens/.local/share/pnpm"
+export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
 *":$PNPM_HOME:"*) ;;
 *) export PATH="$PNPM_HOME:$PATH" ;;
@@ -180,6 +179,6 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 
 # opencode
-export PATH=/home/kalvens/.opencode/bin:$PATH
+export PATH="$HOME/.opencode/bin:$PATH"
 export EDITOR=nvim
 export VISUAL=nvim
