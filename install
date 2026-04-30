@@ -1,107 +1,397 @@
 #!/bin/bash
+declare -a MENU_KINDS=()
+declare -a MENU_SOURCES=()
+declare -a MENU_DESTS=()
+declare -a MENU_LABELS=()
+declare -a MENU_SELECTED=()
+declare -a MENU_STATUSES=()
+
 post_install_actions() {
 	source ~/.bashrc
 }
 
+add_menu_item() {
+	MENU_KINDS+=("$1")
+	MENU_SOURCES+=("$2")
+	MENU_DESTS+=("$3")
+	MENU_LABELS+=("$4")
+	MENU_SELECTED+=("$5")
+	MENU_STATUSES+=("$6")
+}
+
+path_exists() {
+	local path="$1"
+	[[ -e "$path" || -L "$path" ]]
+}
+
+path_is_installed() {
+	local file="$1"
+	local dest_file_path="$2"
+	local source_path="$(pwd)/$file"
+
+	if [[ -L "$dest_file_path" ]] && [[ "$(readlink "$dest_file_path")" == "$source_path" ]]; then
+		return 0
+	fi
+
+	if [[ $file =~ \.tpl$ ]] && [[ -e "$dest_file_path" ]]; then
+		diff -q <(bash "$file") "$dest_file_path" >/dev/null
+		return $?
+	fi
+
+	return 1
+}
+
+component_status() {
+	local installed_count=0
+	local total_count=$#
+	local entry
+
+	for entry in "$@"; do
+		local file="${entry%%::*}"
+		local dest_file_path="${entry#*::}"
+		if path_is_installed "$file" "$dest_file_path"; then
+			((installed_count += 1))
+		fi
+	done
+
+	if [[ $installed_count -eq 0 ]]; then
+		printf 'not installed'
+	elif [[ $installed_count -eq $total_count ]]; then
+		printf 'installed'
+	else
+		printf 'partially installed'
+	fi
+}
+
+component_enabled_by_default() {
+	local status="$1"
+	[[ $status != 'not installed' ]]
+}
+
+draw_toggle_menu() {
+	local current_index="$1"
+
+	printf '\033[H\033[2J\033[3J'
+	printf 'Select what dotfiles this script should manage.\n'
+	printf 'Installed items start enabled.\n'
+	printf 'Enabled + installed: keep/update. Enabled + not installed: install. Disabled + installed: uninstall.\n'
+	printf 'Use Up/Down or j/k to move, Space to toggle, Enter to apply.\n\n'
+
+	local i
+	for i in "${!MENU_LABELS[@]}"; do
+		local cursor='  '
+		local mark=' '
+		if [[ $i -eq $current_index ]]; then
+			cursor='> '
+		fi
+		if [[ ${MENU_SELECTED[$i]} -eq 1 ]]; then
+			mark='x'
+		fi
+		printf '%s[%s] %s (%s)\n' "$cursor" "$mark" "${MENU_LABELS[$i]}" "${MENU_STATUSES[$i]}"
+	done
+
+	printf '\nApplying will install, update, keep, or uninstall each item based on its toggle.\n'
+}
+
+prompt_for_toggles() {
+	local current_index=0
+	local last_index=$((${#MENU_LABELS[@]} - 1))
+
+	while true; do
+		draw_toggle_menu "$current_index"
+		IFS= read -rsn1 key
+
+		case "$key" in
+		'')
+			printf '\n'
+			return 0
+			;;
+		' ')
+			if [[ ${MENU_SELECTED[$current_index]} -eq 1 ]]; then
+				MENU_SELECTED[$current_index]=0
+			else
+				MENU_SELECTED[$current_index]=1
+			fi
+			;;
+		j)
+			if [[ $current_index -lt $last_index ]]; then
+				((current_index += 1))
+			fi
+			;;
+		k)
+			if [[ $current_index -gt 0 ]]; then
+				((current_index -= 1))
+			fi
+			;;
+		$'\x1b')
+			IFS= read -rsn2 key
+			case "$key" in
+			'[A')
+				if [[ $current_index -gt 0 ]]; then
+					((current_index -= 1))
+				fi
+				;;
+			'[B')
+				if [[ $current_index -lt $last_index ]]; then
+					((current_index += 1))
+				fi
+				;;
+			esac
+			;;
+		esac
+	done
+}
+
+apply_single_selection() {
+	local file="$1"
+	local dest_file_path="$2"
+	local label="$3"
+	local selected="$4"
+
+	if [[ $selected -eq 1 ]] && path_is_installed "$file" "$dest_file_path"; then
+		return 0
+	elif [[ $selected -eq 1 ]]; then
+		echo "dotfiles: install/update $label"
+		install_file "$file" "$dest_file_path"
+	elif path_is_installed "$file" "$dest_file_path"; then
+		echo "dotfiles: uninstall $label"
+		remove "$dest_file_path"
+	elif path_exists "$dest_file_path"; then
+		echo "dotfiles: leaving unmanaged $label at $dest_file_path"
+	fi
+}
+
+apply_component_selection() {
+	local component="$1"
+	local selected="$2"
+	local dest_dir="$HOME"
+
+	case "$component" in
+	xresources)
+		if [[ $selected -eq 1 ]]; then
+			apply_single_selection Xresources "$dest_dir/.Xresources" '.Xresources' 1
+			apply_single_selection Xresources-themes "$dest_dir/.Xresources-themes" '.Xresources-themes' 1
+			apply_single_selection Xresources.d "$dest_dir/.Xresources.d" '.Xresources.d' 1
+			apply_single_selection fonts "$dest_dir/.fonts" '.fonts' 1
+			if [[ -d "$dest_dir/.config/gtk-3.0" ]]; then
+				apply_single_selection gtk-settings.ini "$dest_dir/.config/gtk-3.0/gtk-settings.ini" 'gtk settings' 1
+			fi
+		else
+			echo 'dotfiles: uninstall Xresources files if managed'
+			apply_single_selection Xresources "$dest_dir/.Xresources" '.Xresources' 0
+			apply_single_selection Xresources-themes "$dest_dir/.Xresources-themes" '.Xresources-themes' 0
+			apply_single_selection Xresources.d "$dest_dir/.Xresources.d" '.Xresources.d' 0
+			apply_single_selection fonts "$dest_dir/.fonts" '.fonts' 0
+			if [[ -d "$dest_dir/.config/gtk-3.0" ]]; then
+				apply_single_selection gtk-settings.ini "$dest_dir/.config/gtk-3.0/gtk-settings.ini" 'gtk settings' 0
+			fi
+		fi
+		;;
+	bash_files)
+		if [[ $selected -eq 1 ]]; then
+			apply_single_selection bash_profile "$dest_dir/.bash_profile" '.bash_profile' 1
+			apply_single_selection bashrc "$dest_dir/.bashrc" '.bashrc' 1
+			apply_single_selection inputrc "$dest_dir/.inputrc" '.inputrc' 1
+		else
+			echo 'dotfiles: uninstall bash files if managed'
+			apply_single_selection bash_profile "$dest_dir/.bash_profile" '.bash_profile' 0
+			apply_single_selection bashrc "$dest_dir/.bashrc" '.bashrc' 0
+			apply_single_selection inputrc "$dest_dir/.inputrc" '.inputrc' 0
+		fi
+		;;
+	tmux)
+		if [[ $selected -eq 1 ]]; then
+			apply_single_selection tmux.conf "$dest_dir/.tmux.conf" '.tmux.conf' 1
+			apply_single_selection init_tmux "$dest_dir/init_tmux" 'tmux startup script' 1
+		else
+			echo 'dotfiles: uninstall tmux files if managed'
+			apply_single_selection tmux.conf "$dest_dir/.tmux.conf" '.tmux.conf' 0
+			apply_single_selection init_tmux "$dest_dir/init_tmux" 'tmux startup script' 0
+		fi
+		;;
+	psqlrc)
+		if [[ $selected -eq 1 ]]; then
+			apply_single_selection psqlrc "$dest_dir/.psqlrc" 'psqlrc config' 1
+			if path_is_installed psqlrc "$dest_dir/.psqlrc"; then
+				mkdir -p "$dest_dir/.psql"
+			fi
+		elif path_is_installed psqlrc "$dest_dir/.psqlrc"; then
+			echo 'dotfiles: uninstall psqlrc config'
+			remove "$dest_dir/.psqlrc"
+		fi
+		;;
+	vim)
+		if [[ $selected -eq 1 ]]; then
+			apply_single_selection vim "$dest_dir/.vim" 'vim config directory' 1
+			apply_single_selection vimrc "$dest_dir/.vimrc" 'vimrc' 1
+		else
+			echo 'dotfiles: uninstall vim config if managed'
+			apply_single_selection vim "$dest_dir/.vim" 'vim config directory' 0
+			apply_single_selection vimrc "$dest_dir/.vimrc" 'vimrc' 0
+		fi
+		;;
+	i3)
+		if [[ $selected -eq 1 ]]; then
+			mkdir -p "$dest_dir/.config/i3"
+			apply_single_selection i3-config "$dest_dir/.config/i3/config" 'i3 config' 1
+			apply_single_selection i3 "$dest_dir/.i3" 'i3 directory' 1
+		else
+			echo 'dotfiles: uninstall i3 config if managed'
+			apply_single_selection i3-config "$dest_dir/.config/i3/config" 'i3 config' 0
+			apply_single_selection i3 "$dest_dir/.i3" 'i3 directory' 0
+		fi
+		;;
+	launch_editor)
+		apply_single_selection launch_editor "$dest_dir/launch_editor" 'launch editor script' "$selected"
+		;;
+	opencode)
+		if [[ $selected -eq 1 ]]; then
+			mkdir -p "$dest_dir/.config/opencode"
+			apply_single_selection opencode.jsonc "$dest_dir/.config/opencode/opencode.jsonc" 'opencode.jsonc' 1
+			apply_single_selection tui.json "$dest_dir/.config/opencode/tui.json" 'opencode tui.json' 1
+		else
+			echo 'dotfiles: uninstall opencode config if managed'
+			apply_single_selection opencode.jsonc "$dest_dir/.config/opencode/opencode.jsonc" 'opencode.jsonc' 0
+			apply_single_selection tui.json "$dest_dir/.config/opencode/tui.json" 'opencode tui.json' 0
+		fi
+		;;
+	neovim_config)
+		if [[ $selected -eq 1 ]]; then
+			if ! which node &>/dev/null; then
+				echo 'Node not found in path, it required to install neovim'
+			else
+				if [[ ! -d "$dest_dir/.config" ]]; then
+					mkdir "$dest_dir/.config"
+				fi
+				apply_single_selection nvim "$dest_dir/.nvim" 'neovim config directory' 1
+				apply_single_selection nvim "$dest_dir/.config/nvim" 'neovim config symlink' 1
+				apply_single_selection spellings.json "$dest_dir/.spellings.json" '.spellings.json' 1
+				apply_single_selection launch_editor "$dest_dir/launch_editor" 'launch editor script' 1
+
+				if ! which pnpm &>/dev/null; then
+					echo 'Installing pnpm'
+					curl -fsSL https://get.pnpm.io/install.sh | sh -
+				fi
+
+				if ! which cspell &>/dev/null; then
+					echo 'Adding cspell for code spelling checking'
+					pnpm install -g cspell
+				fi
+
+				if ! which shfmt &>/dev/null; then
+					echo 'package shfmt not found, install using local OS package manager for bash formatting'
+				fi
+
+				if ! which cargo &>/dev/null; then
+					echo 'Cargo not found, skipping rust dependencys'
+				else
+					if ! rustup component list --installed | grep -q '^rust-analyzer'; then
+						echo 'Installing rust-analyzer'
+						rustup component add rust-analyzer
+					fi
+				fi
+			fi
+		else
+			echo 'dotfiles: uninstall neovim config if managed'
+			apply_single_selection nvim "$dest_dir/.nvim" 'neovim config directory' 0
+			apply_single_selection nvim "$dest_dir/.config/nvim" 'neovim config symlink' 0
+			apply_single_selection spellings.json "$dest_dir/.spellings.json" '.spellings.json' 0
+			apply_single_selection launch_editor "$dest_dir/launch_editor" 'launch editor script' 0
+		fi
+		;;
+	esac
+}
+
 install_home() {
 	local dest_dir="$HOME"
-	local excluded="$(basename $0) README.md install update i3-config gtk-settings.ini i3 init_tmux launch_editor vim vimrc nvim psqlrc tui.json"
+	local excluded="$(basename $0) README.md install update i3-config gtk-settings.ini i3 init_tmux launch_editor vim vimrc nvim psqlrc tui.json opencode.jsonc Xresources Xresources-themes Xresources.d fonts bash_profile bashrc inputrc spellings.json tmux.conf"
 
+	local status
+	local selected
 	local file
+
+	status=$(component_status "nvim::$dest_dir/.nvim" "nvim::$dest_dir/.config/nvim" "spellings.json::$dest_dir/.spellings.json" "launch_editor::$dest_dir/launch_editor")
+	selected=0
+	if component_enabled_by_default "$status"; then
+		selected=1
+	fi
+	add_menu_item 'component' 'neovim_config' '' 'neovim config' "$selected" "$status"
+
+	status=$(component_status "bash_profile::$dest_dir/.bash_profile" "bashrc::$dest_dir/.bashrc" "inputrc::$dest_dir/.inputrc")
+	selected=0
+	if component_enabled_by_default "$status"; then
+		selected=1
+	fi
+	add_menu_item 'component' 'bash_files' '' 'bash files' "$selected" "$status"
+
+	status=$(component_status "opencode.jsonc::$dest_dir/.config/opencode/opencode.jsonc" "tui.json::$dest_dir/.config/opencode/tui.json")
+	selected=0
+	if component_enabled_by_default "$status"; then
+		selected=1
+	fi
+	add_menu_item 'component' 'opencode' '' 'opencode config' "$selected" "$status"
+
+	status=$(component_status "tmux.conf::$dest_dir/.tmux.conf" "init_tmux::$dest_dir/init_tmux")
+	selected=0
+	if component_enabled_by_default "$status"; then
+		selected=1
+	fi
+	add_menu_item 'component' 'tmux' '' 'tmux files' "$selected" "$status"
+
+	status=$(component_status "Xresources::$dest_dir/.Xresources" "Xresources-themes::$dest_dir/.Xresources-themes" "Xresources.d::$dest_dir/.Xresources.d" "fonts::$dest_dir/.fonts")
+	if [[ -d "$dest_dir/.config/gtk-3.0" ]]; then
+		status=$(component_status "Xresources::$dest_dir/.Xresources" "Xresources-themes::$dest_dir/.Xresources-themes" "Xresources.d::$dest_dir/.Xresources.d" "fonts::$dest_dir/.fonts" "gtk-settings.ini::$dest_dir/.config/gtk-3.0/gtk-settings.ini")
+	fi
+	selected=0
+	if component_enabled_by_default "$status"; then
+		selected=1
+	fi
+	add_menu_item 'component' 'xresources' '' 'Xresources and fonts' "$selected" "$status"
+
+	status=$(component_status "psqlrc::$dest_dir/.psqlrc")
+	selected=0
+	if component_enabled_by_default "$status"; then
+		selected=1
+	fi
+	add_menu_item 'component' 'psqlrc' '' 'psqlrc config' "$selected" "$status"
+
+	status=$(component_status "vim::$dest_dir/.vim" "vimrc::$dest_dir/.vimrc")
+	selected=0
+	if component_enabled_by_default "$status"; then
+		selected=1
+	fi
+	add_menu_item 'component' 'vim' '' 'vim config' "$selected" "$status"
+
+	status=$(component_status "i3-config::$dest_dir/.config/i3/config" "i3::$dest_dir/.i3")
+	selected=0
+	if component_enabled_by_default "$status"; then
+		selected=1
+	fi
+	add_menu_item 'component' 'i3' '' 'i3 config' "$selected" "$status"
+
 	for file in *; do
 		if ! element_exists "$file" "$excluded"; then
 			local dest_file_name=$(basename "$file" .tpl)
 			local dest_file_path="$dest_dir/.$dest_file_name"
-			read -p "add ${dest_file_name} to home? (Y/n) " -e ADD_FILE
-			if [[ $ADD_FILE != "n" ]]; then
-				install_file "$file" "$dest_file_path"
+			status=$(component_status "$file::$dest_file_path")
+			selected=0
+			if component_enabled_by_default "$status"; then
+				selected=1
 			fi
+			add_menu_item 'single' "$file" "$dest_file_path" "home: .$dest_file_name" "$selected" "$status"
 		fi
 	done
 
-	read -p "add psqlrc config? (Y/n) " ADD_FILE
-	if [[ $ADD_FILE != "n" ]]; then
-		mkdir -p "$dest_dir/.psql"
-		install_file psqlrc "$dest_dir/.psqlrc"
-	fi
+	prompt_for_toggles
 
-	read -p "add vim config? (Y/n) " ADD_FILE
-	if [[ $ADD_FILE != "n" ]]; then
-		install_file vim "$dest_dir/.vim"
-		install_file vimrc "$dest_dir/.vimrc"
-	fi
-
-	read -p "add i3 config? (Y/n) " ADD_FILE
-	if [[ $ADD_FILE != "n" ]]; then
-		mkdir -p "$dest_dir/.config/i3"
-		install_file i3-config "$dest_dir/.config/i3/config"
-		install_file i3 "$dest_dir/.i3"
-	fi
-
-	if [[ -d "$dest_dir/.config/gtk-3.0" ]]; then
-		read -p "add gtk settings (sets system prefer dark mode for applications if system uses gtk)? (Y/n) " -e ADD_FILE
-		if [[ $ADD_FILE != "n" ]]; then
-			install_file gtk-settings.ini "$dest_dir/.config/gtk-3.0/gtk-settings.ini"
-		fi
-	fi
-
-	read -p "add tmux startup script? (Y/n) " ADD_FILE
-	if [[ $ADD_FILE != "n" ]]; then
-		install_file init_tmux "$dest_dir/init_tmux"
-	fi
-
-	read -p "add launch editor script? (Y/n) " ADD_FILE
-	if [[ $ADD_FILE != "n" ]]; then
-		install_file launch_editor "$dest_dir/launch_editor"
-	fi
-
-	read -p "add opencode config? (Y/n) " ADD_FILE
-	if [[ $ADD_FILE != "n" ]]; then
-		mkdir -p "$dest_dir/.config/opencode"
-		install_file opencode.jsonc "$dest_dir/.config/opencode/opencode.jsonc"
-		install_file tui.json "$dest_dir/.config/opencode/tui.json"
-	fi
-
-	read -p "add neovim? (Y/n) " ADD_FILE
-	if [[ $ADD_FILE != "n" ]]; then
-		read -p "install neovim? (y/N) " INSTALL_NIGHTLY
-		if [[ $INSTALL_NIGHTLY == "y" ]]; then
-			curl -L -o /tmp/nvim-linux64.tar.gz https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz
-			sudo rm -rf /opt/nvim
-			sudo tar -C /opt -xzf /tmp/nvim-linux64.tar.gz
-			rm /tmp/nvim-linux64.tar.gz
-		fi
-		if ! which node &>/dev/null; then
-			echo 'Node not found in path, it required to install neovim'
+	local i
+	for i in "${!MENU_KINDS[@]}"; do
+		if [[ ${MENU_KINDS[$i]} == 'single' ]]; then
+			apply_single_selection "${MENU_SOURCES[$i]}" "${MENU_DESTS[$i]}" "${MENU_LABELS[$i]}" "${MENU_SELECTED[$i]}"
 		else
-			if [[ ! -d "$dest_dir/.config" ]]; then
-				mkdir "$dest_dir/.config"
-			fi
-			install_file nvim "$dest_dir/.nvim"
-			install_file nvim "$dest_dir/.config/nvim"
-
-			if ! which pnpm &>/dev/null; then
-				echo 'Installing pnpm'
-				curl -fsSL https://get.pnpm.io/install.sh | sh -
-			fi
-
-			if ! which cspell &>/dev/null; then
-				echo 'Adding cspell for code spelling checking'
-				pnpm install -g cspell
-			fi
-
-			if ! which shfmt &>/dev/null; then
-				echo 'package shfmt not found, install using local OS package manager for bash formatting'
-			fi
-
-			if ! which cargo &>/dev/null; then
-				echo 'Cargo not found, skipping rust dependencys'
-			else
-				# add rust analyzer
-				rustup component add rust-analyzer
-			fi
+			apply_component_selection "${MENU_SOURCES[$i]}" "${MENU_SELECTED[$i]}"
 		fi
-	fi
+	done
 
 	post_install_actions
 }
@@ -111,8 +401,7 @@ install_file() {
 	local dest_file_path="$2"
 	if [[ -e $dest_file_path ]] ||
 		[[ -L $dest_file_path ]]; then # Can be a broken symlink
-		if [[ -e $dest_file_path ]] &&
-			diff -q "$file" "$dest_file_path" >/dev/null; then
+		if path_is_installed "$file" "$dest_file_path"; then
 			echo "dotfiles: identical $dest_file_path"
 		elif $replace_all; then
 			replace_file "$file" "$dest_file_path"
