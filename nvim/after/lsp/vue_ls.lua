@@ -1,3 +1,6 @@
+local workspace = require('config.typescript_workspace')
+local typescriptPreferences = require('config.typescript_preferences')
+
 return {
 	-- need this set to work around an error until https://github.com/mason-org/mason-lspconfig.nvim/pull/588
 	-- is merged
@@ -6,8 +9,11 @@ return {
 		},
 	},
 	settings = {
+		typescript = typescriptPreferences.languageSettings(),
+		javascript = typescriptPreferences.languageSettings(),
 		vue = {
 			suggest = {
+				autoImports = true,
 				componentNameCasing = 'alwaysKebabCase',
 				propsNameCasing = 'alwaysKebabCase'
 			},
@@ -20,6 +26,7 @@ return {
 			},
 		}
 	},
+	root_dir = workspace.vueRootDir,
 	on_init = function(client)
 		client.handlers['tsserver/request'] = function(_, result, context)
 			local clients = vim.lsp.get_clients({ bufnr = context.bufnr, name = 'vtsls' })

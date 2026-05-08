@@ -30,9 +30,9 @@ return {
 			local oxlintBusyTimers = {}
 			local oxlintBusySince = {}
 			local oxlintSawOxcDiagnostics = {}
-				local oxlintMinVisibleMs = 180
-				local oxlintSettleDelayMs = 500
-				local oxlintBusyTimeoutMs = 3000
+			local oxlintMinVisibleMs = 180
+			local oxlintSettleDelayMs = 500
+			local oxlintBusyTimeoutMs = 3000
 			local oxlintSpinnerTimer = nil
 			_G.oxlint_busy_buffers = oxlintBusyBuffers
 
@@ -116,7 +116,7 @@ return {
 
 				timer = vim.uv.new_timer()
 				oxlintBusyTimers[bufnr] = timer
-					timer:start(oxlintBusyTimeoutMs, 0, function()
+				timer:start(oxlintBusyTimeoutMs, 0, function()
 					vim.schedule(function()
 						if vim.api.nvim_buf_is_valid(bufnr) then
 							setOxlintBusy(bufnr, false)
@@ -198,11 +198,11 @@ return {
 						if hasOxc then
 							oxlintSawOxcDiagnostics[args.buf] = true
 							-- Keep spinner alive until diagnostics have been stable briefly.
-								scheduleOxlintClear(args.buf, oxlintSettleDelayMs)
-							elseif oxlintSawOxcDiagnostics[args.buf] then
-								-- Empty update after oxc diagnostics means lint settled.
-								scheduleOxlintClear(args.buf, oxlintSettleDelayMs)
-							end
+							scheduleOxlintClear(args.buf, oxlintSettleDelayMs)
+						elseif oxlintSawOxcDiagnostics[args.buf] then
+							-- Empty update after oxc diagnostics means lint settled.
+							scheduleOxlintClear(args.buf, oxlintSettleDelayMs)
+						end
 					end
 				end,
 			})
@@ -368,9 +368,21 @@ return {
 				end,
 			})
 
-				vim.lsp.enable({ 'vue_ls', 'vtsls', 'lua_ls', 'bashls', 'jsonls', 'phpactor', 'copilot', 'oxlint', 'oxfmt', 'eslint' });
-			end
-		},
+			vim.lsp.enable({
+				'vue_ls',
+				'vtsls',
+				'lua_ls',
+				'bashls',
+				'jsonls',
+				'phpactor',
+				'copilot',
+				'oxlint',
+				'oxfmt',
+				'eslint',
+				'tsgo'
+			});
+		end
+	},
 	-- }}}
 	-- {{{ Formatters and Linters
 	{

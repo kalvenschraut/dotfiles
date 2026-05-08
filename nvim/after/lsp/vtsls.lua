@@ -1,26 +1,11 @@
+local workspace = require('config.typescript_workspace')
+local typescriptPreferences = require('config.typescript_preferences')
+
 local typescriptConfig = {
-	importModuleSpecifier = 'non-relative',
-	importModuleSpecifierEnding = 'js',
-	inlayHints = {
-		parameterNames = {
-			enabled = 'all',
-		},
-		parameterTypes = {
-			enabled = true,
-		},
-		variableTypes = {
-			enabled = true,
-		},
-		propertyDeclarationTypes = {
-			enabled = true,
-		},
-		functionLikeReturnTypes = {
-			enabled = true,
-		},
-	},
-	format = {
-		insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces = true
-	},
+	inlayHints = typescriptPreferences.inlayHints,
+	format = typescriptPreferences.format,
+	preferences = typescriptPreferences.preferences,
+	suggest = typescriptPreferences.suggest,
 	experimental = {
 		-- useTsgo = true,
 	},
@@ -36,7 +21,10 @@ return {
 	end,
 	settings = {
 		typescript = typescriptConfig,
-		javascript = typescriptConfig,
+		javascript = typescriptPreferences.languageSettings({
+			inlayHints = typescriptPreferences.inlayHints,
+			format = typescriptPreferences.format,
+		}),
 		vtsls = {
 			autoUseWorkspaceTsdk = true,
 			tsserver = {
@@ -52,5 +40,6 @@ return {
 			},
 		},
 	},
+	root_dir = workspace.vueRootDir,
 	filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
 }
