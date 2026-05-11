@@ -21,6 +21,7 @@ return {
 					'bashls',
 					'phpactor',
 					'oxlint',
+					'tsgo',
 					'oxfmt',
 					'eslint',
 				}
