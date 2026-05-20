@@ -271,6 +271,7 @@ apply_component_selection() {
 				if ! which pnpm &>/dev/null; then
 					echo 'Installing pnpm'
 					curl -fsSL https://get.pnpm.io/install.sh | sh -
+					source ~/.bashrc
 				fi
 
 				if ! which cspell &>/dev/null; then
